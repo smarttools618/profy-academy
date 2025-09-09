@@ -1,0 +1,215 @@
+:root {
+    /* Populated by JavaScript */
+}
+
+/* Base and Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-color);
+    color: var(--text-primary-color);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Animated Aurora Background from main style.css */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: 
+        radial-gradient(circle at 15% 25%, var(--primary-color-alpha), transparent 40%),
+        radial-gradient(circle at 85% 75%, var(--accent-color-alpha), transparent 40%);
+    animation: aurora 20s infinite linear;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+@keyframes aurora {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    gap: 2rem;
+}
+
+header {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+/* Form Card */
+.form-card {
+    background: var(--card-background-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 20px;
+    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.form-card h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary-color);
+}
+
+#session-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-secondary-color);
+}
+
+.form-group input,
+.form-group select {
+    background-color: hsl(240, 10%, 8%);
+    border: 1px solid var(--card-border-color);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary-color);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-color-alpha);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+/* Buttons */
+.cta-button, .secondary-button, .action-button {
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cta-button {
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    color: var(--text-primary-color);
+}
+.cta-button:hover {
+    transform: scale(1.05);
+}
+
+.secondary-button {
+    background: transparent;
+    border: 1px solid var(--card-border-color);
+    color: var(--text-secondary-color);
+}
+.secondary-button:hover {
+    background: var(--card-border-color);
+    color: var(--text-primary-color);
+}
+
+/* List Section & Table */
+.list-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.table-container {
+    overflow-x: auto;
+    background: var(--card-background-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 15px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+}
+
+#sessions-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+}
+
+#sessions-table th, #sessions-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--card-border-color);
+}
+
+#sessions-table th {
+    color: var(--text-secondary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+#sessions-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#sessions-table tbody tr:hover {
+    background-color: hsla(240, 10%, 15%, 0.5);
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.action-button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.edit-btn { background-color: var(--primary-color); color: white; }
+.delete-btn { background-color: hsl(0, 60%, 50%); color: white; }
+
+/* Status Tags */
+.status-tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+}
+.status-tag.Upcoming { background-color: var(--primary-color); color: white; }
+.status-tag.Live { background-color: var(--success-color); color: white; }
+.status-tag.Ended { background-color: var(--text-secondary-color); color: var(--background-color); }

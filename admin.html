@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <div id="app-container" class="container">
+        <header>
+            <h1>لوحة التحكم</h1>
+        </header>
+
+        <main>
+            <section class="form-card" id="session-form-card">
+                <h2 id="form-title">إضافة حصة جديدة</h2>
+                <form id="session-form">
+                    <input type="hidden" id="session-id">
+                    <div class="form-group">
+                        <label for="topic">عنوان الحصة</label>
+                        <input type="text" id="topic" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">المادة</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="session_time">وقت الحصة</label>
+                        <input type="datetime-local" id="session_time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">الحالة</label>
+                        <select id="status" required>
+                            <option value="Upcoming">قادمة</option>
+                            <option value="Live">مباشر</option>
+                            <option value="Ended">انتهت</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="session_link">رابط الحصة (اختياري)</label>
+                        <input type="url" id="session_link" placeholder="https://zoom.us/j/...">
+                    </div>
+                    <div class="form-group">
+                        <label for="recording_link">رابط التسجيل (اختياري)</label>
+                        <input type="url" id="recording_link" placeholder="https://youtube.com/watch?v=...">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" id="save-button" class="cta-button">حفظ</button>
+                        <button type="button" id="cancel-button" class="secondary-button" style="display: none;">إلغاء</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="list-section">
+                <h2>جميع الحصص</h2>
+                <div class="table-container">
+                    <table id="sessions-table">
+                        <thead>
+                            <tr>
+                                <th>العنوان</th>
+                                <th>المادة</th>
+                                <th>الوقت</th>
+                                <th>الحالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sessions-tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+
+</body>
+</html>

@@ -3,452 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول الحصص المباشرة - منصة التعليم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #0a192f 0%, #162b4d 100%);
-            color: #ccd6f6;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .logo i {
-            font-size: 2.5rem;
-            color: #64ffda;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            color: #64ffda;
-            font-weight: 700;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #8892b0;
-            margin-top: 10px;
-        }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-        }
-        
-        @media (min-width: 992px) {
-            .main-content {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        .card {
-            background-color: #112240;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-title {
-            color: #64ffda;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #64ffda;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .session-info {
-            margin-bottom: 25px;
-        }
-        
-        .session-title {
-            font-size: 1.4rem;
-            color: #ccd6f6;
-            margin-bottom: 15px;
-        }
-        
-        .session-date {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #8892b0;
-            margin-bottom: 20px;
-        }
-        
-        .countdown {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin: 30px 0;
-        }
-        
-        .countdown-box {
-            background: rgba(100, 255, 218, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-        }
-        
-        .countdown-value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #64ffda;
-        }
-        
-        .countdown-label {
-            font-size: 0.9rem;
-            color: #8892b0;
-            margin-top: 5px;
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #64ffda;
-            color: #0a192f;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            text-decoration: none;
-        }
-        
-        .btn:hover {
-            background-color: #4fd1b9;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
-        }
-        
-        .btn i {
-            margin-left: 8px;
-        }
-        
-        .live-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background-color: #64ffda;
-            border-radius: 50%;
-            margin-left: 10px;
-            animation: pulse 1.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-        
-        .table-container {
-            overflow-x: auto;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: right;
-            border-bottom: 1px solid rgba(204, 214, 246, 0.1);
-        }
-        
-        th {
-            background-color: rgba(100, 255, 218, 0.1);
-            color: #64ffda;
-            font-weight: 600;
-        }
-        
-        tr:last-child td {
-            border-bottom: none;
-        }
-        
-        tr:hover {
-            background-color: rgba(100, 255, 218, 0.05);
-        }
-        
-        .status-upcoming {
-            color: #64ffda;
-            font-weight: 500;
-        }
-        
-        .status-ended {
-            color: #8892b0;
-            text-decoration: line-through;
-        }
-        
-        .status-live {
-            color: #ff6b6b;
-            font-weight: 700;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #8892b0;
-            border-top: 1px solid rgba(204, 214, 246, 0.1);
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .card-title {
-                font-size: 1.5rem;
-            }
-            
-            .countdown {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            
-            .countdown-value {
-                font-size: 1.8rem;
-            }
-            
-            th, td {
-                padding: 10px;
-            }
-        }
-    </style>
+    <title>Live Session Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+
+    <div id="app-container" class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
-                <h1>منصة التعليم التفاعلية</h1>
-            </div>
-            <p class="subtitle">جدول الحصص المباشرة والمراجعات</p>
+            <h1 id="header-title"></h1>
         </header>
-        
-        <main class="main-content">
-            <div class="left-column">
-                <div class="card">
-                    <h2 class="card-title">
-                        <i class="fas fa-calendar-alt"></i>
-                        الحصة القادمة
-                        <span class="live-indicator"></span>
-                    </h2>
-                    
-                    <div class="session-info">
-                        <h3 id="next-session-title" class="session-title">مراجعة شاملة لدرس الدوال</h3>
-                        <div class="session-date">
-                            <i class="far fa-clock"></i>
-                            <span id="session-date">الأربعاء، 25 سبتمبر 2024 - 18:00</span>
-                        </div>
-                    </div>
-                    
-                    <div id="countdown-timer" class="countdown">
-                        <div class="countdown-box">
-                            <div id="days" class="countdown-value">00</div>
-                            <div class="countdown-label">أيام</div>
-                        </div>
-                        <div class="countdown-box">
-                            <div id="hours" class="countdown-value">00</div>
-                            <div class="countdown-label">ساعات</div>
-                        </div>
-                        <div class="countdown-box">
-                            <div id="minutes" class="countdown-value">00</div>
-                            <div class="countdown-label">دقائق</div>
-                        </div>
-                        <div class="countdown-box">
-                            <div id="seconds" class="countdown-value">00</div>
-                            <div class="countdown-label">ثواني</div>
-                        </div>
-                    </div>
-                    
-                    <a id="live-session-link" href="#" class="btn">
-                        <i class="fas fa-door-open"></i>
-                        ادخل للحصة الآن
-                    </a>
+
+        <main>
+            <section class="hero-card" id="hero-card" aria-live="polite">
+                <!-- Skeleton Loader -->
+                <div id="hero-skeleton">
+                    <div class="skeleton skeleton-text" style="width: 120px; margin: 0 auto 1rem;"></div>
+                    <div class="skeleton skeleton-title" style="margin: 0 auto 1rem;"></div>
+                    <div class="skeleton skeleton-text" style="width: 200px; margin: 0 auto 2rem;"></div>
+                    <div class="skeleton skeleton-text" style="font-size: 3rem; width: 300px; margin: 0 auto 2rem;"></div>
+                    <div class="skeleton skeleton-button" style="margin: 0 auto;"></div>
                 </div>
-            </div>
-            
-            <div class="right-column">
-                <div class="card">
-                    <h2 class="card-title">
-                        <i class="fas fa-table"></i>
-                        جدول الحصص القادمة
-                    </h2>
-                    
-                    <div class="table-container">
-                        <table id="schedule-table">
-                            <thead>
-                                <tr>
-                                    <th>اليوم</th>
-                                    <th>التوقيت</th>
-                                    <th>الموضوع</th>
-                                    <th>الحالة</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Will be populated by JavaScript -->
-                            </tbody>
-                        </table>
+                <!-- Dynamic Content -->
+                <div id="hero-content" style="display: none;">
+                    <h2 id="hero-card-title"></h2>
+                    <p class="session-topic" id="hero-topic"></p>
+                    <p class="session-subject" id="hero-subject"></p>
+                    <div id="hero-status-container">
+                        <div class="status-label" id="hero-status-label" style="display: none;"></div>
+                        <div class="countdown" id="countdown" aria-live="assertive"></div>
                     </div>
+                    <a href="#" id="hero-cta-button" class="cta-button" target="_blank"></a>
                 </div>
-            </div>
+            </section>
+
+            <section class="schedule-section" id="schedule-section">
+                <h2 id="schedule-title"></h2>
+                <div class="schedule-grid" id="schedule-grid">
+                    <!-- Skeleton Loaders -->
+                    <div class="schedule-item skeleton"></div>
+                    <div class="schedule-item skeleton"></div>
+                    <div class="schedule-item skeleton"></div>
+                </div>
+            </section>
         </main>
-        
-        <div class="footer">
-            <p>© 2024 منصة التعليم التفاعلية. جميع الحقوق محفوظة.</p>
-        </div>
+
+        <footer>
+            <p>&copy; 2025 Profy Academy. All rights reserved.</p>
+        </footer>
     </div>
 
-    <script>
-        // Configuration object - easily editable by non-technical users
-        const siteConfig = {
-            // This section controls the main upcoming session and the countdown timer
-            nextSession: {
-                title: "مراجعة شاملة لدرس الدوال",
-                // IMPORTANT: Use ISO 8601 format (YYYY-MM-DDTHH:MM:SS) for the date
-                date: "2024-09-25T18:00:00",
-                link: "https://meet.google.com/your-live-session-link"
-            },
-            // This section controls the schedule table
-            schedule: [
-                { day: "الأربعاء", time: "18:00", topic: "مراجعة شاملة لدرس الدوال", status: "قادمة" },
-                { day: "الخميس", time: "19:00", topic: "تمارين في الفيزياء: الوحدة الأولى", status: "قادمة" },
-                { day: "السبت", time: "17:00", topic: "منهجية الإجابة في الفلسفة", status: "قادمة" },
-                { day: "الإثنين", time: "18:00", topic: "مراجعة درس الأعداد المركبة", status: "انتهت" },
-                { day: "الثلاثاء", time: "16:00", topic: "نصائح للامتحان الوطني", status: "قادمة" },
-                { day: "الأحد", time: "15:00", topic: "حلول تمارين الرياضيات", status: "قادمة" }
-            ]
-        };
+    <script type="module" src="script.js"></script>
 
-        // DOM elements
-        const nextSessionTitle = document.getElementById('next-session-title');
-        const sessionDate = document.getElementById('session-date');
-        const liveSessionLink = document.getElementById('live-session-link');
-        const countdownTimer = document.getElementById('countdown-timer');
-        const scheduleTable = document.getElementById('schedule-table');
-        
-        // Update upcoming session details
-        function updateUpcomingSession() {
-            const { title, date, link } = siteConfig.nextSession;
-            
-            nextSessionTitle.textContent = title;
-            liveSessionLink.href = link;
-            
-            // Format the date for display
-            const sessionDate = new Date(date);
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const formattedDate = sessionDate.toLocaleDateString('ar-AR', options);
-            const timeString = sessionDate.toLocaleTimeString('ar-AR', { hour: '2-digit', minute: '2-digit' });
-            
-            sessionDate.textContent = `${formattedDate} - ${timeString}`;
-        }
-        
-        // Countdown timer function
-        function updateCountdown() {
-            const targetDate = new Date(siteConfig.nextSession.date);
-            const now = new Date();
-            const difference = targetDate - now;
-            
-            if (difference <= 0) {
-                // Session has started
-                countdownTimer.innerHTML = '<div class="session-live">الحصة مباشرة الآن!</div>';
-                return;
-            }
-            
-            // Calculate time components
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-            
-            // Update the countdown display
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-        }
-        
-        // Generate schedule table
-        function generateScheduleTable() {
-            const tbody = scheduleTable.querySelector('tbody');
-            tbody.innerHTML = ''; // Clear existing content
-            
-            siteConfig.schedule.forEach(session => {
-                const row = document.createElement('tr');
-                
-                // Add appropriate class based on status
-                if (session.status === 'انتهت') {
-                    row.classList.add('status-ended');
-                } else if (session.status === 'قادمة') {
-                    row.classList.add('status-upcoming');
-                } else {
-                    row.classList.add('status-live');
-                }
-                
-                row.innerHTML = `
-                    <td>${session.day}</td>
-                    <td>${session.time}</td>
-                    <td>${session.topic}</td>
-                    <td>${session.status}</td>
-                `;
-                
-                tbody.appendChild(row);
-            });
-        }
-        
-        // Initialize the page
-        function init() {
-            updateUpcomingSession();
-            generateScheduleTable();
-            
-            // Update countdown immediately and then every second
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        }
-        
-        // Run initialization when DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
 </body>
 </html>
