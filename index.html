@@ -3,59 +3,602 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Session Hub</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>أكاديمية بروفي - منصة تعليمية</title>
+    <!-- Bootstrap RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-nU14brUcp6StFntEOOEBvcJm4huWjB0OcIeQ3fltAfSmuZFrkAif0T+UtNGlKKQv" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Tajawal (Arabic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <div id="app-container" class="container">
-        <header>
-            <h1 id="header-title"></h1>
-        </header>
-
-        <main>
-            <section class="hero-card" id="hero-card" aria-live="polite">
-                <!-- Skeleton Loader -->
-                <div id="hero-skeleton">
-                    <div class="skeleton skeleton-text" style="width: 120px; margin: 0 auto 1rem;"></div>
-                    <div class="skeleton skeleton-title" style="margin: 0 auto 1rem;"></div>
-                    <div class="skeleton skeleton-text" style="width: 200px; margin: 0 auto 2rem;"></div>
-                    <div class="skeleton skeleton-text" style="font-size: 3rem; width: 300px; margin: 0 auto 2rem;"></div>
-                    <div class="skeleton skeleton-button" style="margin: 0 auto;"></div>
+    <!-- Header Section -->
+    <header class="sticky-top bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light py-3">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="#">
+                    <img src="images/logo.svg" alt="أكاديمية بروفي" width="50" class="me-2">
+                    <h1 class="h5 mb-0 text-primary fw-bold">أكاديمية بروفي</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#about">عن الأكاديمية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#courses">الدورات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#teachers">المعلمون</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">اتصل بنا</a>
+                        </li>
+                    </ul>
                 </div>
-                <!-- Dynamic Content -->
-                <div id="hero-content" style="display: none;">
-                    <h2 id="hero-card-title"></h2>
-                    <p class="session-topic" id="hero-topic"></p>
-                    <p class="session-subject" id="hero-subject"></p>
-                    <div id="hero-status-container">
-                        <div class="status-label" id="hero-status-label" style="display: none;"></div>
-                        <div class="countdown" id="countdown" aria-live="assertive"></div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-5 mt-5 bg-light">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="pe-lg-4">
+                        <h2 class="display-5 fw-bold mb-3 text-primary">تعلم بطريقة مبتكرة مع أفضل المعلمين</h2>
+                        <p class="lead mb-4 text-muted">منصة تعليمية متكاملة توفر دروسًا تفاعلية عن بعد لمختلف المراحل الدراسية</p>
+                        <a href="#courses" class="btn btn-primary btn-lg rounded-pill px-4 py-2 shadow-sm">استكشف الدورات</a>
                     </div>
-                    <a href="#" id="hero-cta-button" class="cta-button" target="_blank"></a>
                 </div>
-            </section>
-
-            <section class="schedule-section" id="schedule-section">
-                <h2 id="schedule-title"></h2>
-                <div class="schedule-grid" id="schedule-grid">
-                    <!-- Skeleton Loaders -->
-                    <div class="schedule-item skeleton"></div>
-                    <div class="schedule-item skeleton"></div>
-                    <div class="schedule-item skeleton"></div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <img src="images/hero-image.svg" alt="التعلم عن بعد" class="img-fluid">
+                    </div>
                 </div>
-            </section>
-        </main>
+            </div>
+        </div>
+    </section>
 
-        <footer>
-            <p>&copy; 2025 Profy Academy. All rights reserved.</p>
-        </footer>
-    </div>
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">عن الأكاديمية</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">منصة تعليمية رائدة توفر تجربة تعلم فريدة</p>
+                <div class="divider mx-auto my-3" style="width: 50px; height: 3px; background-color: var(--bs-primary);"></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="text-center">
+                        <img src="images/about.svg" alt="عن الأكاديمية" class="img-fluid rounded shadow-sm">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="ps-lg-4">
+                        <h3 class="h4 fw-bold mb-4">لماذا أكاديمية بروفي؟</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                <span>دروس مباشرة وتفاعلية عبر Google Meet</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                <span>متابعة دقيقة وضمان جودة التكوين</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                <span>فرصة للتميز والانطلاقة القوية منذ بداية السنة</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                <span>معلمون ذوو خبرة عالية في مجالاتهم</span>
+                            </li>
+                            <li class="mb-4 d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success me-2 mt-1"></i>
+                                <span>منهجية تعليمية مبتكرة تناسب احتياجات الطلاب</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="btn btn-warning rounded-pill px-4 py-2 shadow-sm">تواصل معنا</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script type="module" src="script.js"></script>
+    <!-- Courses Section -->
+    <section id="courses" class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">الدورات المتاحة</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">دورات تعليمية متميزة لمختلف المراحل الدراسية</p>
+                <div class="divider mx-auto my-3" style="width: 50px; height: 3px; background-color: var(--bs-primary);"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-top overflow-hidden" style="height: 200px;">
+                            <img src="images/course-primary4.svg" alt="دروس السنة الرابعة أساسي" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="card-body p-4">
+                            <h3 class="h5 fw-bold mb-3">دروس السنة الرابعة أساسي</h3>
+                            <p class="text-muted mb-3">دروس تفاعلية في الرياضيات، العربية، والفرنسية</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-primary rounded-pill px-3 py-2 fw-normal">250 دينار</span>
+                                <span class="text-muted small">كامل الثلاثي</span>
+                            </div>
+                            <a href="#contact" class="btn btn-outline-primary w-100 rounded-pill">سجل الآن</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-top overflow-hidden" style="height: 200px;">
+                            <img src="images/course-primary7.svg" alt="دروس السنة السابعة أساسي" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="card-body p-4">
+                            <h3 class="h5 fw-bold mb-3">دروس السنة السابعة أساسي</h3>
+                            <p class="text-muted mb-3">دروس تفاعلية في الرياضيات، العربية، الفرنسية، والإنجليزية</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-primary rounded-pill px-3 py-2 fw-normal">300 دينار</span>
+                                <span class="text-muted small">كامل الثلاثي</span>
+                            </div>
+                            <a href="#contact" class="btn btn-outline-primary w-100 rounded-pill">سجل الآن</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-3 overflow-hidden">
+                        <div class="card-img-top overflow-hidden" style="height: 200px;">
+                            <img src="images/course-other.svg" alt="دورات أخرى" class="img-fluid w-100 h-100 object-fit-cover">
+                        </div>
+                        <div class="card-body p-4">
+                            <h3 class="h5 fw-bold mb-3">دورات أخرى</h3>
+                            <p class="text-muted mb-3">دورات مخصصة لمختلف المراحل الدراسية</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-warning rounded-pill px-3 py-2 fw-normal">اتصل بنا</span>
+                                <span class="text-muted small">حسب الاحتياج</span>
+                            </div>
+                            <a href="#contact" class="btn btn-outline-primary w-100 rounded-pill">استفسر الآن</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- Teachers Section -->
+    <section id="teachers" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">فريق المعلمين</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">نخبة من المعلمين ذوي الخبرة والكفاءة</p>
+                <div class="divider mx-auto my-3" style="width: 50px; height: 3px; background-color: var(--bs-primary);"></div>
+            </div>
+            
+            <!-- Primary 4 Teachers -->
+            <div class="mb-5">
+                <h3 class="h4 fw-bold mb-4 text-center">معلمو السنة الرابعة أساسي</h3>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-math4.svg" alt="وصفي خليفي" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">وصفي خليفي</h4>
+                                <p class="text-muted small mb-0">الرياضيات</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-arabic4.svg" alt="شكري صوافي" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">شكري صوافي</h4>
+                                <p class="text-muted small mb-0">العربية</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-french4.svg" alt="نجيب المستوري" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">نجيب المستوري</h4>
+                                <p class="text-muted small mb-0">الفرنسية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Primary 7 Teachers -->
+            <div>
+                <h3 class="h4 fw-bold mb-4 text-center">معلمو السنة السابعة أساسي</h3>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-math7.svg" alt="يوسف قروي" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">يوسف قروي</h4>
+                                <p class="text-muted small mb-0">الرياضيات</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-arabic7.svg" alt="إبراهيم السمراني" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">إبراهيم السمراني</h4>
+                                <p class="text-muted small mb-0">العربية</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-french7.svg" alt="آمال كيلاني" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">آمال كيلاني</h4>
+                                <p class="text-muted small mb-0">الفرنسية</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <div class="card border-0 text-center h-100 shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="rounded-circle overflow-hidden mx-auto mb-3" style="width: 120px; height: 120px;">
+                                    <img src="images/teacher-english7.svg" alt="فوزي بدري" class="img-fluid">
+                                </div>
+                                <h4 class="h5 fw-bold mb-1">فوزي بدري</h4>
+                                <p class="text-muted small mb-0">الإنجليزية</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">مزايا الدورة</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">ما يميز دوراتنا التعليمية</p>
+                <div class="divider mx-auto my-3" style="width: 50px; height: 3px; background-color: var(--bs-primary);"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-video text-primary fa-3x"></i>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">دروس مباشرة وتفاعلية</h3>
+                        <p class="text-muted mb-0">عبر Google Meet مع إمكانية التفاعل المباشر مع المعلم</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-clipboard-check text-primary fa-3x"></i>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">متابعة دقيقة</h3>
+                        <p class="text-muted mb-0">ضمان جودة التكوين من خلال المتابعة المستمرة للطلاب</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-rocket text-primary fa-3x"></i>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">انطلاقة قوية</h3>
+                        <p class="text-muted mb-0">فرصة للتميز والانطلاقة القوية منذ بداية السنة الدراسية</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow-sm text-center p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-calendar-alt text-primary fa-3x"></i>
+                        </div>
+                        <h3 class="h5 fw-bold mb-3">دورة الثلاثي الأول</h3>
+                        <p class="text-muted mb-0">تبدأ من 1 أكتوبر مع برنامج دراسي مكثف ومنظم</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">أسعار الدورات</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">استثمار في مستقبل أبنائنا</p>
+                <div class="divider mx-auto my-3" style="width: 50px; height: 3px; background-color: var(--bs-primary);"></div>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h3 class="h4 fw-bold mb-3">السنة الرابعة أساسي</h3>
+                                <div class="pricing-amount mb-3">
+                                    <span class="display-4 fw-bold text-primary">250</span>
+                                    <span class="h5 text-muted">دينار</span>
+                                </div>
+                                <p class="text-muted">كامل الثلاثي</p>
+                            </div>
+                            <hr class="my-4">
+                            <ul class="list-unstyled mb-5">
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في الرياضيات</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في العربية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في الفرنسية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>حصص أسبوعية منتظمة</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>اختبارات دورية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>متابعة مستمرة للتقدم</span>
+                                </li>
+                            </ul>
+                            <div class="text-center">
+                                <a href="#contact" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">سجل الآن</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-5">
+                    <div class="card h-100 border-0 shadow position-relative">
+                        <div class="position-absolute top-0 start-50 translate-middle badge bg-primary px-3 py-2 rounded-pill">
+                            <span class="fw-bold">الأكثر شعبية</span>
+                        </div>
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h3 class="h4 fw-bold mb-3">السنة السابعة أساسي</h3>
+                                <div class="pricing-amount mb-3">
+                                    <span class="display-4 fw-bold text-primary">300</span>
+                                    <span class="h5 text-muted">دينار</span>
+                                </div>
+                                <p class="text-muted">كامل الثلاثي</p>
+                            </div>
+                            <hr class="my-4">
+                            <ul class="list-unstyled mb-5">
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في الرياضيات</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في العربية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في الفرنسية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>دروس في الإنجليزية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>حصص أسبوعية منتظمة</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>اختبارات دورية</span>
+                                </li>
+                                <li class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-2"></i>
+                                    <span>متابعة مستمرة للتقدم</span>
+                                </li>
+                            </ul>
+                            <div class="text-center">
+                                <a href="#contact" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">سجل الآن</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+     <section id="contact" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">اتصل بنا</h2>
+                <p class="lead text-muted mx-auto" style="max-width: 700px;">نحن هنا للإجابة على استفساراتك</p>
+                <div class="divider mx-auto my-3" style="width: 50px; height: 3px; background-color: var(--bs-primary);"></div>
+            </div>
+            
+            <div class="row g-5">
+                <div class="col-lg-5">
+                    <div class="bg-light p-4 h-100 rounded shadow-sm">
+                        <h3 class="h4 fw-bold mb-4">معلومات الاتصال</h3>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1">مديرة الأكاديمية</h4>
+                                <p class="text-muted mb-0">سناء علبوشي</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-4">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1">رقم الهاتف</h4>
+                                <p class="mb-0"><a href="tel:98748831" class="text-decoration-none text-primary">98748831</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 me-3">
+                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1">البريد الإلكتروني</h4>
+                                <p class="mb-0"><a href="mailto:sanaalbouchi@gmail.com" class="text-decoration-none text-primary">sanaalbouchi@gmail.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3 class="h4 fw-bold mb-4">أرسل رسالة</h3>
+                            <form id="contactForm">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control" id="name" placeholder="الاسم الكامل" required>
+                                            <label for="name">الاسم الكامل</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control" id="email" placeholder="البريد الإلكتروني" required>
+                                            <label for="email">البريد الإلكتروني</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="tel" class="form-control" id="phone" placeholder="رقم الهاتف" required>
+                                            <label for="phone">رقم الهاتف</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="message" placeholder="الرسالة" style="height: 150px" required></textarea>
+                                            <label for="message">الرسالة</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">إرسال الرسالة</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </section>
+
+     <!-- Footer Section -->
+     <footer class="bg-dark text-white py-5">
+        <div class="container py-4">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="mb-4">
+                        <img src="images/logo.svg" alt="أكاديمية بروفي" class="img-fluid mb-3" style="max-height: 60px;">
+                        <h5 class="fw-bold mb-2">أكاديمية بروفي</h5>
+                        <p class="text-muted mb-0">منصة تعليمية متكاملة للتعلم عن بعد</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-4">روابط سريعة</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">الرئيسية</a></li>
+                        <li class="mb-2"><a href="#about" class="text-decoration-none text-muted">عن الأكاديمية</a></li>
+                        <li class="mb-2"><a href="#courses" class="text-decoration-none text-muted">الدورات</a></li>
+                        <li class="mb-2"><a href="#teachers" class="text-decoration-none text-muted">المعلمون</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-decoration-none text-muted">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 col-lg-3 mb-4 mb-md-0">
+                    <h5 class="fw-bold mb-4">معلومات الاتصال</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2 text-muted"><i class="fas fa-user me-2"></i> سناء علبوشي</li>
+                        <li class="mb-2"><a href="tel:98748831" class="text-decoration-none text-muted"><i class="fas fa-phone me-2"></i>98748831</a></li>
+                        <li class="mb-2"><a href="mailto:sanaalbouchi@gmail.com" class="text-decoration-none text-muted"><i class="fas fa-envelope me-2"></i>sanaalbouchi@gmail.com</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 col-lg-3">
+                    <h5 class="fw-bold mb-4">تابعنا</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-decoration-none" aria-label="فيسبوك">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-decoration-none" aria-label="انستغرام">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-decoration-none" aria-label="تويتر">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                        </a>
+                        <a href="#" class="text-decoration-none" aria-label="يوتيوب">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                <i class="fab fa-youtube"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4 border-secondary">
+            
+            <div class="text-center text-muted">
+                <p class="mb-0">&copy; 2023 أكاديمية بروفي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
