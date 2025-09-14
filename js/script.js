@@ -90,8 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         navbarToggler.click(); // Use Bootstrap's built-in toggle
                     }
                     
-                    // Calculate header height for offset
-                    const headerHeight = document.querySelector('header').offsetHeight;
+                    // Calculate header height for offset (if header exists)
+                    const headerEl = document.querySelector('header');
+                    const headerHeight = headerEl ? headerEl.offsetHeight : 0;
                     
                     // Scroll to element with offset for fixed header
                     window.scrollTo({
@@ -106,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Active navigation link based on scroll position
     function setActiveNavLink() {
         const sections = document.querySelectorAll('section[id]');
-        const headerHeight = document.querySelector('header').offsetHeight;
+        const headerEl = document.querySelector('header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 0;
         
         let currentSectionId = '';
         
@@ -147,16 +149,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Header scroll effect
     const header = document.querySelector('header');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
-            header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            header.style.background = '#ffffff';
-        } else {
-            header.style.boxShadow = 'none';
-            header.style.background = '#ffffff';
-        }
-    });
+
+    if (header) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                header.style.background = '#ffffff';
+            } else {
+                header.style.boxShadow = 'none';
+                header.style.background = '#ffffff';
+            }
+        });
+    }
 
     // Contact Form Validation
     const contactForm = document.getElementById('contactForm');
@@ -213,4 +217,120 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // =========================
+    // FAQ Enhancements (Search, Chips, Expand/Collapse, Reveal)
+    // =========================
+    (function initFaq() {
+        const faqSection = document.getElementById('faq');
+        if (!faqSection) return;
+
+        const searchInput = document.getElementById('faqSearch');
+        const clearBtn = faqSection.querySelector('.clear-search');
+        const chipsWrap = document.getElementById('faqChips');
+        const countEl = document.getElementById('faqCount');
+        const emptyEl = document.getElementById('faqEmpty');
+        const expandAllBtn = document.getElementById('expandAll');
+        const collapseAllBtn = document.getElementById('collapseAll');
+        const items = Array.from(faqSection.querySelectorAll('.faq-item'));
+
+        function normalize(str) {
+            return (str || '')
+                .toString()
+                .toLowerCase()
+                .normalize('NFKD')
+                .replace(/[\u064B-\u065F]/g, '') // remove Arabic diacritics
+                .trim();
+        }
+
+        let activeFilter = 'all';
+
+        function updateCount(visibleCount) {
+            if (!countEl) return;
+            // Simple Arabic pluralization for "سؤال"
+            // We'll use: 0 نتائج، 1 سؤال، 2 سؤالان، 3-10 أسئلة، >10 سؤال
+            const n = visibleCount;
+            let text = `${n} سؤال`;
+            if (n === 0) text = 'لا أسئلة';
+            else if (n === 1) text = 'سؤال واحد';
+            else if (n === 2) text = 'سؤالان';
+            else if (n >= 3 && n <= 10) text = `${n} أسئلة`;
+            else text = `${n} سؤال`;
+            countEl.textContent = text;
+        }
+
+        function filterFaq() {
+            const term = normalize(searchInput ? searchInput.value : '');
+            let visible = 0;
+
+            items.forEach(item => {
+                const text = normalize(item.textContent);
+                const tags = normalize(item.dataset.tags || '');
+                const matchesTerm = !term || text.includes(term) || tags.includes(term);
+                const matchesChip = activeFilter === 'all' || tags.includes(normalize(activeFilter));
+                const shouldShow = matchesTerm && matchesChip;
+                item.classList.toggle('d-none', !shouldShow);
+                if (shouldShow) visible++;
+            });
+
+            updateCount(visible);
+            if (emptyEl) emptyEl.classList.toggle('d-none', visible !== 0);
+            if (clearBtn && searchInput) clearBtn.classList.toggle('d-none', searchInput.value.length === 0);
+        }
+
+        // Search input
+        if (searchInput) {
+            searchInput.addEventListener('input', filterFaq);
+        }
+
+        // Clear search
+        if (clearBtn && searchInput) {
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                filterFaq();
+                searchInput.focus();
+            });
+        }
+
+        // Chips filter
+        if (chipsWrap) {
+            chipsWrap.addEventListener('click', (e) => {
+                const btn = e.target.closest('.chip');
+                if (!btn) return;
+                chipsWrap.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter = btn.dataset.filter || 'all';
+                filterFaq();
+            });
+        }
+
+        // Expand/Collapse all using Bootstrap Collapse
+        function setAll(open) {
+            items.forEach(item => {
+                const collapseEl = item.querySelector('.accordion-collapse');
+                if (!collapseEl) return;
+                const instance = bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false });
+                open ? instance.show() : instance.hide();
+            });
+        }
+
+        if (expandAllBtn) expandAllBtn.addEventListener('click', () => setAll(true));
+        if (collapseAllBtn) collapseAllBtn.addEventListener('click', () => setAll(false));
+
+        // Reveal on scroll animation
+        const revealEls = items;
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealEls.forEach(el => io.observe(el));
+
+        // Initial filter and count
+        filterFaq();
+    })();
 });
