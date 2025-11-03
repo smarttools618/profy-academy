@@ -14,6 +14,12 @@ const nextConfig = {
     ]
   },
   
+  // Environment variables that should be available to the client
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  },
+  
   // Enable React strict mode for better development experience
   reactStrictMode: true,
   
@@ -49,6 +55,25 @@ const nextConfig = {
         ]
       }
     ];
+  },
+  
+  // Webpack configuration to handle environment variables
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
+  },
+  
+  // Enable server components external packages
+  experimental: {
+    serverComponentsExternalPackages: ['@supabase/supabase-js']
   }
 };
 
