@@ -21,6 +21,13 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
+      // Check if Supabase client is available
+      if (!supabase) {
+        setError('خطأ في الاتصال بالخادم');
+        setIsLoading(false);
+        return;
+      }
+
       // Validate input
       const validatedData = loginSchema.parse(formData);
 
@@ -42,12 +49,12 @@ export default function LoginPage() {
           .eq('phone_number', validatedData.identifier)
           .single();
 
-        if (!profile) {
+        if (!profile || !(profile as any).email) {
           throw new Error('رقم الهاتف غير مسجل');
         }
 
         signInData = await supabase.auth.signInWithPassword({
-          email: profile.email,
+          email: (profile as any).email,
           password: validatedData.password,
         });
       }
@@ -72,7 +79,7 @@ export default function LoginPage() {
           .single();
 
         // Redirect based on role
-        switch (profile?.role) {
+        switch ((profile as any)?.role) {
           case 'student':
             router.push('/student/dashboard');
             break;

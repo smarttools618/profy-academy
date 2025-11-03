@@ -55,6 +55,11 @@ export default function ParentDashboard() {
 
   const fetchLinkedStudents = async () => {
     try {
+      if (!supabase) {
+        console.error('Supabase client not available');
+        return;
+      }
+
       const { data: links, error } = await supabase
         .from('student_parent_links')
         .select(`
@@ -76,7 +81,7 @@ export default function ParentDashboard() {
             const studentProfile = link.profiles;
             
             // Fetch subscription status
-            const { data: subscription } = await supabase
+            const { data: subscription } = await supabase!
               .from('subscriptions')
               .select('status, end_date')
               .eq('student_id', studentProfile.id)
@@ -88,8 +93,8 @@ export default function ParentDashboard() {
               full_name_ar: studentProfile.full_name_ar,
               grade_level: studentProfile.grade_level,
               avatar_url: studentProfile.avatar_url,
-              subscription_status: subscription?.status || null,
-              subscription_end_date: subscription?.end_date || null,
+              subscription_status: (subscription as any)?.status || null,
+              subscription_end_date: (subscription as any)?.end_date || null,
             };
           })
         );
@@ -107,6 +112,12 @@ export default function ParentDashboard() {
   const fetchStudentData = async (studentId: string) => {
     setLoadingData(true);
     try {
+      if (!supabase) {
+        console.error('Supabase client not available');
+        setLoadingData(false);
+        return;
+      }
+
       // Fetch upcoming sessions
       const { data: sessions } = await supabase
         .from('live_sessions')

@@ -1,39 +1,45 @@
-import { createClient as createClientComponentClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/supabase';
 
-// This is a client-side only version of the Supabase client
-let supabase: ReturnType<typeof createClientComponentClient<Database>> | null = null;
+// Get environment variables with fallback
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Create and return a Supabase client for client-side usage
-export const createClient = () => {
-  // Only create the client once and reuse it
-  if (!supabase && typeof window !== 'undefined') {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    
-    if (!supabaseUrl || !supabaseKey) {
-      console.error('Missing Supabase environment variables!');
-      return null;
-    }
-    
-    supabase = createClientComponentClient<Database>({
-      supabaseUrl,
-      supabaseKey,
-      options: {
-        auth: {
-          persistSession: true,
-          autoRefreshToken: true,
-          detectSessionInUrl: true
-        }
-      }
-    });
+// Create a singleton Supabase client
+let supabaseInstance: ReturnType<typeof createSupabaseClient<Database>> | null = null;
+
+function getSupabaseClient() {
+  // Only create client in browser environment
+  if (typeof window === 'undefined') {
+    return null;
   }
-  
-  return supabase;
-};
 
-// Export a singleton instance for convenience
-export const getSupabase = () => createClient();
+  // Return existing instance if already created
+  if (supabaseInstance) {
+    return supabaseInstance;
+  }
 
-// For backward compatibility
-export { getSupabase as supabase };
+  // Validate environment variables
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error('Supabase environment variables are not set!');
+    return null;
+  }
+
+  // Create new instance
+  supabaseInstance = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storageKey: 'profy-academy-auth',
+    },
+  });
+
+  return supabaseInstance;
+}
+
+// Export the client instance (not a function)
+export const supabase = getSupabaseClient();
+
+// Also export function for manual initialization
+export const createClient = getSupabaseClient;

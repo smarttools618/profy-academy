@@ -43,6 +43,13 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     setLoadingData(true);
     try {
+      // Check if Supabase client is available
+      if (!supabase) {
+        console.error('Supabase client not available');
+        setLoadingData(false);
+        return;
+      }
+
       // Fetch user statistics
       const { count: totalUsersCount } = await supabase
         .from('profiles')

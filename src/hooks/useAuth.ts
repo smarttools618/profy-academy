@@ -21,6 +21,13 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Check if Supabase client is available
+    if (!supabase) {
+      console.error('Supabase client not available');
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -49,6 +56,12 @@ export function useAuth() {
 
   const fetchProfile = async (userId: string) => {
     try {
+      if (!supabase) {
+        console.error('Supabase client not available');
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -65,6 +78,10 @@ export function useAuth() {
   };
 
   const signOut = async () => {
+    if (!supabase) {
+      console.error('Supabase client not available');
+      return;
+    }
     await supabase.auth.signOut();
     router.push('/login');
   };

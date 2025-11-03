@@ -33,6 +33,13 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
+      // Check if Supabase client is available
+      if (!supabase) {
+        setError('خطأ في الاتصال بالخادم');
+        setIsLoading(false);
+        return;
+      }
+
       // Validate input
       const validatedData = studentRegisterSchema.parse(formData);
 
@@ -68,7 +75,7 @@ export default function RegisterPage() {
           grade_level: validatedData.gradeLevel,
           email_verified: false,
           phone_verified: false,
-        });
+        } as any);
 
         if (profileError) {
           console.error('Profile creation error:', profileError);

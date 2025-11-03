@@ -51,6 +51,13 @@ export default function SubscriptionPage() {
 
   const fetchData = async () => {
     try {
+      // Check if Supabase client is available
+      if (!supabase) {
+        console.error('Supabase client not available');
+        setLoading(false);
+        return;
+      }
+
       // Fetch subscription plans
       const { data: plansData } = await supabase
         .from('subscription_plans')
@@ -60,22 +67,27 @@ export default function SubscriptionPage() {
 
       setPlans(plansData || []);
 
-      // Fetch current subscription
-      const { data: subData } = await supabase
-        .from('subscriptions')
-        .select(`
-          *,
-          subscription_plans (*)
-        `)
-        .eq('student_id', profile?.id)
-        .eq('status', 'active')
-        .single();
+      // Fetch current subscription if profile exists
+      if (profile?.id) {
+        const { data: subData } = await supabase
+          .from('subscriptions')
+          .select(`
+            *,
+            subscription_plans (*)
+          `)
+          .eq('student_id', profile.id)
+          .eq('status', 'active')
+          .single();
 
-      if (subData) {
-        setCurrentSubscription({
-          ...subData,
-          plan: subData.subscription_plans as unknown as SubscriptionPlan,
-        });
+        if (subData) {
+          const subscriptionPlans = (subData as any).subscription_plans;
+          if (subscriptionPlans) {
+            setCurrentSubscription({
+              ...(subData as any),
+              plan: subscriptionPlans as SubscriptionPlan,
+            });
+          }
+        }
       }
     } catch (error) {
       console.error('Error fetching subscription data:', error);
