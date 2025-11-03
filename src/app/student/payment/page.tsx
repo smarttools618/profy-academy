@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase/client';
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Upload, CheckCircle, AlertCircle, CreditCard } from 'lucide-react';
 import Link from 'next/link';
 
-export default function ManualPaymentPage() {
+function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, profile, loading: authLoading } = useAuth();
@@ -352,5 +352,20 @@ export default function ManualPaymentPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function ManualPaymentPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">جاري التحميل...</p>
+        </div>
+      </div>
+    }>
+      <PaymentContent />
+    </Suspense>
   );
 }
