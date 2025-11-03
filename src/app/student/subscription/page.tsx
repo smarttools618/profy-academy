@@ -106,39 +106,15 @@ export default function SubscriptionPage() {
     }
   };
 
-  const handleSubscribe = async (plan: SubscriptionPlan) => {
-    setProcessingPayment(true);
+  const handleSubscribe = (plan: SubscriptionPlan) => {
+    // Get plan level and price
+    const planLevel = plan.name_en.replace('profy_', '');
+    const price = getPlanPrice(plan);
     
-    try {
-      // Get plan level from plan name
-      const planLevel = plan.name_en.replace('profy_', '') as 'basic' | 'standard' | 'premium';
-      
-      // Call payment initiation API
-      const response = await fetch('/api/payments/initiate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          planLevel,
-          period: selectedPeriod,
-          studentId: user?.id,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'فشل بدء عملية الدفع');
-      }
-
-      // Redirect to Konnect payment page
-      window.location.href = data.paymentUrl;
-    } catch (error: any) {
-      console.error('Payment error:', error);
-      alert(error.message || 'حدث خطأ أثناء معالجة الدفع. يرجى المحاولة مرة أخرى.');
-      setProcessingPayment(false);
-    }
+    // Redirect to manual payment page with plan details
+    router.push(
+      `/student/payment?plan=${planLevel}&period=${selectedPeriod}&price=${price}`
+    );
   };
 
   if (authLoading || loading) {

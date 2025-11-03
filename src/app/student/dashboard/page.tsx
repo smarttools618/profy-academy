@@ -8,6 +8,7 @@ import { supabase } from '@/lib/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatTime, getGradeName } from '@/lib/utils';
+import SubscriptionAlert from '@/components/SubscriptionAlert';
 
 interface Subject {
   id: string;
@@ -154,6 +155,11 @@ export default function StudentDashboard() {
           </div>
         </div>
       </header>
+
+      {/* Subscription Alert */}
+      <div className="container-custom pt-6">
+        <SubscriptionAlert />
+      </div>
 
       {/* Main Content */}
       <main className="container-custom py-8">
