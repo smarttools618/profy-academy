@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours & Exercices : Les Bases de l'Informatique</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. VARIABLES & RESET --- */
+        :root {
+            --primary: #4361ee;       /* Bright Blue */
+            --secondary: #3f37c9;     /* Deep Blue */
+            --accent: #f72585;        /* Pink/Red for highlights */
+            --success: #4cc9f0;       /* Cyan/Greenish */
+            --correct: #2ecc71;       /* Pure Green */
+            --wrong: #e74c3c;         /* Pure Red */
+            --warning: #f1c40f;       /* Yellow (Hints) */
+            --bg: #f8f9fa;
+            --text: #2b2d42;
+            --card-bg: #ffffff;
+            --radius: 15px;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; color: var(--text); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* --- 2. NAVIGATION --- */
+        nav {
+            background: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); }
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+        .btn-practice {
+            background: var(--accent);
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 20px;
+        }
+
+        /* --- 3. HERO SECTION --- */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 60px;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 15px; color: white; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
+
+        /* --- 4. SECTIONS GENERAL --- */
+        .section { padding: 60px 0; border-bottom: 1px solid #eee; }
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 50px; height: 4px; 
+            background: var(--primary); margin: 10px auto; border-radius: 2px;
+        }
+
+        /* --- 5. DEFINITION ANIMATION --- */
+        .word-puzzle {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .puzzle-piece {
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 1s ease;
+        }
+        .p-blue { background: #dbeafe; color: var(--primary); }
+        .p-fade { color: #9ca3af; font-size: 0.8em; }
+        
+        .merged .p-fade { width: 0; padding: 0; opacity: 0; overflow: hidden; margin: 0; }
+        .merged .p-blue { margin: 0; border-radius: 0; }
+        .merged .p-blue:first-child { border-radius: 10px 0 0 10px; }
+        .merged .p-blue:last-child { border-radius: 0 10px 10px 0; }
+
+        /* --- 6. HARDWARE GRID (IMAGES) --- */
+        .hw-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .hw-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid #eee;
+        }
+        .hw-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        
+        .hw-img-wrapper { height: 180px; overflow: hidden; position: relative; }
+        .hw-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .hw-card:hover img { transform: scale(1.1); }
+        
+        .hw-badge {
+            position: absolute; top: 10px; right: 10px;
+            padding: 4px 12px; border-radius: 20px;
+            color: white; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;
+        }
+        .bg-in { background: var(--success); }
+        .bg-out { background: var(--accent); }
+        .bg-mix { background: var(--warning); color: #333; }
+        
+        .hw-content { padding: 20px; }
+        .hw-content h3 { margin-bottom: 10px; color: var(--primary); }
+        .hw-content p { font-size: 0.9rem; color: #666; }
+
+        /* --- 7. COPY/PASTE TUTORIAL --- */
+        .tutorial-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .step-card {
+            background: white; padding: 20px; border-radius: var(--radius);
+            border-top: 5px solid var(--secondary);
+            box-shadow: var(--shadow); text-align: center;
+        }
+        .step-icon { font-size: 2.5rem; margin-bottom: 15px; color: var(--secondary); }
+        .keyboard-shortcut {
+            display: inline-block; background: #333; color: white;
+            padding: 5px 10px; border-radius: 5px; font-family: monospace;
+            font-weight: bold; margin-top: 10px; letter-spacing: 1px;
+        }
+
+        /* --- 8. FILE EXPLORER (ARBORESCENCE) --- */
+        .explorer-container {
+            background: white; border: 1px solid #ccc; border-radius: 8px;
+            height: 450px; display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); max-width: 900px; margin: 0 auto;
+        }
+        .explorer-top {
+            background: #e5e5e5; padding: 10px; display: flex; align-items: center; gap: 10px;
+        }
+        .explorer-body { display: flex; flex: 1; overflow: hidden; }
+        .tree-view { width: 30%; background: #f3f3f3; padding: 15px; border-right: 1px solid #ddd; overflow-y: auto; }
+        .content-view { width: 70%; padding: 20px; display: flex; flex-wrap: wrap; gap: 15px; align-content: flex-start; background: white; }
+        
+        .tree-node { cursor: pointer; margin-bottom: 5px; padding: 5px; border-radius: 4px; }
+        .tree-node:hover { background: #e0e0e0; }
+        .tree-node i { color: #f1c40f; margin-right: 8px; width: 20px; text-align: center; }
+        .tree-children { padding-left: 20px; display: none; }
+        .tree-children.show { display: block; }
+
+        .file-item {
+            width: 90px; height: 90px; text-align: center; padding: 10px;
+            border-radius: 5px; cursor: pointer; display: flex; flex-direction: column; align-items: center;
+        }
+        .file-item:hover { background: #e8f4fd; }
+        .file-item i { font-size: 2.5rem; margin-bottom: 5px; }
+
+        /* --- 9. EXERCISES SECTION --- */
+        #exercices { background: #eef2f3; }
+        .quiz-wrapper { max-width: 800px; margin: 0 auto; }
+        .quiz-card {
+            background: white; padding: 30px; border-radius: var(--radius);
+            box-shadow: var(--shadow); margin-bottom: 30px;
+            position: relative; border-left: 6px solid var(--primary);
+        }
+        .quiz-question { font-size: 1.2rem; font-weight: 600; margin-bottom: 15px; }
+        .quiz-options label {
+            display: block; padding: 12px; margin: 8px 0; border: 2px solid #eee;
+            border-radius: 8px; cursor: pointer; transition: 0.2s;
+        }
+        .quiz-options label:hover { border-color: var(--primary); background: #f0f4ff; }
+        .quiz-options input { margin-right: 10px; }
+
+        /* Feedback Styles */
+        .feedback {
+            margin-top: 15px; padding: 15px; border-radius: 8px; display: none; font-size: 0.95rem;
+        }
+        .feedback.correct { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+        .feedback.wrong { background: #fee2e2; color: #991b1b; border: 1px solid #f87171; }
+        
+        .btn-actions { margin-top: 15px; display: flex; gap: 10px; }
+        .btn-verify {
+            background: var(--primary); color: white; border: none; padding: 10px 20px;
+            border-radius: 6px; cursor: pointer; font-weight: bold;
+        }
+        .btn-hint {
+            background: var(--warning); color: #333; border: none; padding: 10px 15px;
+            border-radius: 6px; cursor: pointer; font-weight: bold;
+        }
+        .hint-text { 
+            display: none; margin-top: 10px; font-style: italic; color: #666; font-size: 0.9rem; 
+            background: #fffbeb; padding: 8px; border-radius: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .word-puzzle { font-size: 1.5rem; }
+            .explorer-container { height: auto; }
+            .explorer-body { flex-direction: column; }
+            .tree-view, .content-view { width: 100%; height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-flex">
+            <div class="logo"><i class="fa-solid fa-laptop-code"></i> Cours 5ème</div>
+            <div class="nav-links">
+                <a href="#course">Leçons</a>
+                <a href="#exercices" class="btn-practice">S'entraîner</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>L'Informatique Facile</h1>
+            <p>Comprendre le matériel, gérer ses fichiers et maîtriser le copier-coller. Tout ce qu'il faut pour réussir ton année !</p>
+        </div>
+    </section>
+
+    <!-- Module 1: Definition -->
+    <section id="course" class="section">
+        <div class="container" style="text-align:center;">
+            <h2 class="section-title">1. Qu'est-ce que l'Informatique ?</h2>
+            
+            <div class="word-puzzle" id="puzzle">
+                <div class="puzzle-piece p-blue">INFOR</div>
+                <div class="puzzle-piece p-fade">mation</div>
+                <div class="puzzle-piece p-fade">auto</div>
+                <div class="puzzle-piece p-blue">MATIQUE</div>
+            </div>
+            
+            <button class="btn-verify" onclick="document.getElementById('puzzle').classList.add('merged')">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Fusionner
+            </button>
+            
+            <p style="margin-top:20px; max-width:600px; margin-left:auto; margin-right:auto;">
+                C'est la science du traitement <strong>automatique</strong> de l'<strong>information</strong> par des machines.
+            </p>
+        </div>
+    </section>
+
+    <!-- Module 2: Hardware Images -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">2. Les Composants (Hardware)</h2>
+            <div class="hw-grid">
+                <!-- Motherboard -->
+                <div class="hw-card">
+                    <div class="hw-badge bg-mix">Centre</div>
+                    <div class="hw-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Motherboard">
+                    </div>
+                    <div class="hw-content">
+                        <h3>Carte Mère</h3>
+                        <p>Le squelette. C'est la grande plaque verte sur laquelle tout se branche.</p>
+                    </div>
+                </div>
+
+                <!-- CPU -->
+                <div class="hw-card">
+                    <div class="hw-badge bg-mix">Cerveau</div>
+                    <div class="hw-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1555618554-86887131d834?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="CPU Processor">
+                    </div>
+                    <div class="hw-content">
+                        <h3>Processeur (CPU)</h3>
+                        <p>Le cerveau. Il fait tous les calculs. Il est caché sous un ventilateur car il chauffe !</p>
+                    </div>
+                </div>
+
+                <!-- RAM -->
+                <div class="hw-card">
+                    <div class="hw-badge bg-mix">Mémoire Vive</div>
+                    <div class="hw-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="RAM Memory">
+                    </div>
+                    <div class="hw-content">
+                        <h3>Mémoire RAM</h3>
+                        <p>La mémoire à court terme. Elle stocke les infos des programmes ouverts (Word, Jeu). Elle se vide quand on éteint.</p>
+                    </div>
+                </div>
+
+                <!-- HDD -->
+                <div class="hw-card">
+                    <div class="hw-badge bg-mix">Stockage</div>
+                    <div class="hw-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1531492253372-269a33c57759?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Hard Drive">
+                    </div>
+                    <div class="hw-content">
+                        <h3>Disque Dur</h3>
+                        <p>La mémoire à long terme. C'est là que sont tes photos et documents, même ordi éteint.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Module 3: Copy / Cut / Paste -->
+    <section class="section" style="background-color: white;">
+        <div class="container">
+            <h2 class="section-title">3. Copier, Couper, Coller</h2>
+            <p style="text-align:center;">Les 3 commandes magiques pour déplacer des textes ou des fichiers.</p>
+
+            <div class="tutorial-steps">
+                <!-- COPIER -->
+                <div class="step-card">
+                    <div class="step-icon"><i class="fa-regular fa-copy"></i></div>
+                    <h3>COPIER (Copy)</h3>
+                    <p>Comme une photocopieuse. L'original reste là, on crée un double.</p>
+                    <div class="keyboard-shortcut">Ctrl + C</div>
+                </div>
+
+                <!-- COUPER -->
+                <div class="step-card">
+                    <div class="step-icon"><i class="fa-solid fa-scissors"></i></div>
+                    <h3>COUPER (Cut)</h3>
+                    <p>Comme des ciseaux. On enlève l'original pour le mettre ailleurs.</p>
+                    <div class="keyboard-shortcut">Ctrl + X</div>
+                </div>
+
+                <!-- COLLER -->
+                <div class="step-card">
+                    <div class="step-icon"><i class="fa-solid fa-paste"></i></div>
+                    <h3>COLLER (Paste)</h3>
+                    <p>Comme de la colle. On dépose ce qu'on a copié ou coupé à l'endroit voulu.</p>
+                    <div class="keyboard-shortcut">Ctrl + V</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Module 4: Interactive Explorer -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">4. L'Arborescence</h2>
+            <p style="text-align:center; margin-bottom:20px;">Utilise l'explorateur ci-dessous. Clique sur les dossiers <i class="fa-solid fa-folder" style="color:#f1c40f;"></i> à gauche pour voir les fichiers.</p>
+
+            <div class="explorer-container">
+                <div class="explorer-top">
+                    <i class="fa-solid fa-arrow-left" style="color:#999;"></i>
+                    <div style="background:white; flex:1; padding:5px; border:1px solid #ccc; font-size:0.9rem;">
+                        Ce PC > <span id="path-text">Disque Local (C:)</span>
+                    </div>
+                </div>
+                <div class="explorer-body">
+                    <!-- Tree -->
+                    <div class="tree-view">
+                        <div class="tree-node" onclick="loadFolder('root')">
+                            <i class="fa-solid fa-hard-drive" style="color:#999;"></i> Disque (C:)
+                        </div>
+                        <div style="padding-left:15px;">
+                            <div class="tree-node" onclick="toggleTree('docs-tree'); loadFolder('docs')">
+                                <i class="fa-solid fa-folder"></i> Documents
+                            </div>
+                            <div id="docs-tree" class="tree-children">
+                                <div class="tree-node" onclick="loadFolder('school')">
+                                    <i class="fa-solid fa-folder"></i> École
+                                </div>
+                                <div class="tree-node" onclick="loadFolder('home')">
+                                    <i class="fa-solid fa-folder"></i> Maison
+                                </div>
+                            </div>
+                            <div class="tree-node" onclick="loadFolder('images')">
+                                <i class="fa-solid fa-folder"></i> Images
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Content -->
+                    <div class="content-view" id="file-area">
+                        <!-- Filled by JS -->
+                        <p style="color:#888; width:100%; text-align:center; margin-top:50px;">Clique sur un dossier à gauche</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Module 5: EXERCICES ZONE -->
+    <section id="exercices" class="section">
+        <div class="container">
+            <h2 class="section-title">5. Espace d'Entraînement</h2>
+            <p style="text-align:center; margin-bottom:40px;">Teste tes connaissances !</p>
+
+            <div class="quiz-wrapper">
+                
+                <!-- Q1 -->
+                <div class="quiz-card" id="q1">
+                    <div class="quiz-question">1. Lequel de ces périphériques est un périphérique de SORTIE ?</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> Le Clavier</label>
+                        <label><input type="radio" name="q1" value="b"> La Souris</label>
+                        <label><input type="radio" name="q1" value="c"> L'Écran</label>
+                    </div>
+                    <div class="btn-actions">
+                        <button class="btn-hint" onclick="toggleHint('h1')">💡 Indice</button>
+                        <button class="btn-verify" onclick="checkAnswer('q1', 'c', 'L\'écran montre ce que l\'ordinateur a calculé. Le clavier et la souris servent à entrer des infos.')">Vérifier</button>
+                    </div>
+                    <div id="h1" class="hint-text">Pense aux sens humains : quel objet est comme la bouche qui parle ?</div>
+                    <div class="feedback" id="f-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="quiz-card" id="q2">
+                    <div class="quiz-question">2. Quel est le raccourci clavier pour COUPER ?</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> Ctrl + C</label>
+                        <label><input type="radio" name="q2" value="b"> Ctrl + X</label>
+                        <label><input type="radio" name="q2" value="c"> Ctrl + V</label>
+                    </div>
+                    <div class="btn-actions">
+                        <button class="btn-hint" onclick="toggleHint('h2')">💡 Indice</button>
+                        <button class="btn-verify" onclick="checkAnswer('q2', 'b', 'Bravo ! Le X ressemble à une paire de ciseaux ouverts.')">Vérifier</button>
+                    </div>
+                    <div id="h2" class="hint-text">Regarde ton clavier, quelle lettre ressemble à des ciseaux ?</div>
+                    <div class="feedback" id="f-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="quiz-card" id="q3">
+                    <div class="quiz-question">3. Si j'éteins l'ordinateur, quel composant perd sa mémoire ?</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> Le Disque Dur</label>
+                        <label><input type="radio" name="q3" value="b"> La Mémoire RAM</label>
+                        <label><input type="radio" name="q3" value="c"> La Clé USB</label>
+                    </div>
+                    <div class="btn-actions">
+                        <button class="btn-hint" onclick="toggleHint('h3')">💡 Indice</button>
+                        <button class="btn-verify" onclick="checkAnswer('q3', 'b', 'Exact ! La RAM est une mémoire volatile (temporaire).')">Vérifier</button>
+                    </div>
+                    <div id="h3" class="hint-text">C'est la mémoire à court terme, celle qui sert juste quand les programmes sont ouverts.</div>
+                    <div class="feedback" id="f-q3"></div>
+                </div>
+
+                 <!-- Q4 -->
+                 <div class="quiz-card" id="q4">
+                    <div class="quiz-question">4. Un dossier peut-il contenir d'autres dossiers ?</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> Vrai</label>
+                        <label><input type="radio" name="q4" value="b"> Faux</label>
+                    </div>
+                    <div class="btn-actions">
+                        <button class="btn-verify" onclick="checkAnswer('q4', 'a', 'Oui ! C\'est le principe de l\'arborescence (Dossier > Sous-dossier).')">Vérifier</button>
+                    </div>
+                    <div class="feedback" id="f-q4"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- FILE EXPLORER LOGIC ---
+        const filesDB = {
+            'root': [], // Root usually just shows folders
+            'docs': [],
+            'school': [
+                { name: 'Maths.docx', type: 'word', icon: 'fa-file-word', color: '#2b579a' },
+                { name: 'Histoire.pptx', type: 'ppt', icon: 'fa-file-powerpoint', color: '#d35400' }
+            ],
+            'home': [
+                { name: 'Jeux.exe', type: 'exe', icon: 'fa-gamepad', color: '#8e44ad' },
+                { name: 'Liste.txt', type: 'txt', icon: 'fa-file-lines', color: '#7f8c8d' }
+            ],
+            'images': [
+                { name: 'Vacances.jpg', type: 'img', icon: 'fa-file-image', color: '#27ae60' },
+                { name: 'Chat.png', type: 'img', icon: 'fa-file-image', color: '#27ae60' }
+            ]
+        };
+
+        function toggleTree(id) {
+            const el = document.getElementById(id);
+            if(el.classList.contains('show')) {
+                el.classList.remove('show');
+            } else {
+                el.classList.add('show');
+            }
+        }
+
+        function loadFolder(folderKey) {
+            const area = document.getElementById('file-area');
+            const path = document.getElementById('path-text');
+            
+            // Update Path Visual
+            path.innerText = "C: > ... > " + folderKey.charAt(0).toUpperCase() + folderKey.slice(1);
+            
+            // Clear area
+            area.innerHTML = '';
+
+            const files = filesDB[folderKey];
+
+            if(!files || files.length === 0) {
+                area.innerHTML = '<p style="color:#888; width:100%; text-align:center; margin-top:20px;">Dossier vide ou contenant seulement des sous-dossiers.</p>';
+                return;
+            }
+
+            // Create Icons
+            files.forEach(f => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                div.innerHTML = `<i class="fa-regular ${f.icon}" style="color:${f.color}"></i><span>${f.name}</span>`;
+                div.onclick = () => alert(`Fichier sélectionné : ${f.name}`);
+                area.appendChild(div);
+            });
+        }
+
+        // --- QUIZ LOGIC ---
+        function toggleHint(id) {
+            const el = document.getElementById(id);
+            el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+        }
+
+        function checkAnswer(questionId, correctValue, explanation) {
+            // Get selected radio
+            const options = document.getElementsByName(questionId);
+            let selected = null;
+            for(const op of options) {
+                if(op.checked) selected = op.value;
+            }
+
+            const feedbackEl = document.getElementById('f-' + questionId);
+            feedbackEl.style.display = 'block';
+            feedbackEl.className = 'feedback'; // reset classes
+
+            if(selected === correctValue) {
+                // Correct
+                feedbackEl.classList.add('correct');
+                feedbackEl.innerHTML = `<strong><i class="fa-solid fa-check"></i> Correct !</strong> ${explanation}`;
+            } else if (selected === null) {
+                // No selection
+                feedbackEl.style.background = '#fff3cd';
+                feedbackEl.style.color = '#856404';
+                feedbackEl.innerHTML = "Choisis une réponse d'abord !";
+            } else {
+                // Wrong
+                feedbackEl.classList.add('wrong');
+                feedbackEl.innerHTML = `<strong><i class="fa-solid fa-xmark"></i> Incorrect.</strong> Essaie encore ou utilise l'indice !`;
+            }
+        }
+    </script>
+</body>
+</html>
