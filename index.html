@@ -1,305 +1,223 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Arborescence : Dossiers et Fichiers</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Icons (FontAwesome) -->
+    <title>الحصص المجانية | Profy Academy</title>
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* --- 1. VARIABLES & RESET --- */
-        :root {
-            --primary: #3a86ff;       /* Main Blue */
-            --secondary: #2c3e50;     /* Dark Text */
-            --folder-col: #ffbe0b;    /* Folder Yellow */
-            --bg: #f0f4f8;            /* Light Background */
-            --radius: 12px;
-            --shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--secondary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 1100px;
-            width: 100%;
-            background: white;
-            padding: 40px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { color: var(--primary); font-family: 'Poppins', sans-serif; margin-bottom: 10px; }
-
-        /* --- 2. MINDMAP (TREE CSS) --- */
-        .mindmap-wrapper {
-            overflow-x: auto;
-            text-align: center;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        /* Tree Structure Logic */
-        .tree ul {
-            padding-top: 20px; position: relative; 
-            display: flex; justify-content: center;
-        }
-        .tree li {
-            float: left; text-align: center; list-style-type: none; 
-            position: relative; padding: 20px 5px 0 5px;
-        }
-        
-        /* Connectors */
-        .tree li::before, .tree li::after {
-            content: ''; position: absolute; top: 0; right: 50%;
-            border-top: 2px solid #ccc; width: 50%; height: 20px;
-        }
-        .tree li::after { right: auto; left: 50%; border-left: 2px solid #ccc; }
-        .tree li:only-child::after, .tree li:only-child::before { display: none; }
-        .tree li:only-child { padding-top: 0; }
-        .tree li:first-child::before, .tree li:last-child::after { border: 0 none; }
-        .tree li:last-child::before { border-right: 2px solid #ccc; border-radius: 0 5px 0 0; }
-        .tree li:first-child::after { border-radius: 5px 0 0 0; }
-        .tree ul ul::before {
-            content: ''; position: absolute; top: 0; left: 50%;
-            border-left: 2px solid #ccc; width: 0; height: 20px;
-        }
-
-        /* Node Styling (The Folders) */
-        .tree-node {
-            border: 2px solid #e0e0e0;
-            padding: 10px 20px;
-            text-decoration: none;
-            color: #555;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: inline-block;
-            border-radius: 8px;
-            transition: all 0.3s;
-            background: white;
-            cursor: pointer;
-            position: relative;
-            z-index: 10;
-            min-width: 120px;
-        }
-
-        /* Icons */
-        .tree-node i { margin-right: 8px; color: var(--folder-col); font-size: 1.2rem; }
-        
-        /* Hover & Active */
-        .tree-node:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-color: var(--folder-col);
-        }
-        .tree-node.active {
-            background-color: var(--folder-col);
-            color: #fff;
-            border-color: var(--folder-col);
-            box-shadow: 0 5px 15px rgba(255, 190, 11, 0.4);
-        }
-        .tree-node.active i { color: white; }
-
-        /* --- 3. FILE VIEWER --- */
-        .viewer-box {
-            border: 2px dashed #cbd5e1;
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 30px;
-            min-height: 220px;
-        }
-        
-        .viewer-header {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: #333;
-            font-weight: bold;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .files-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .file-card {
-            background: white;
-            width: 100px;
-            padding: 15px 10px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: 0.2s;
-            cursor: pointer;
-            animation: popIn 0.4s ease;
-            border: 1px solid transparent;
-        }
-        .file-card:hover { transform: scale(1.05); border-color: var(--primary); }
-        .file-card i { font-size: 2.2rem; margin-bottom: 8px; display: block; }
-        .file-card span { font-size: 0.8rem; line-height: 1.2; display: block; word-break: break-word; }
-
-        /* File Colors */
-        .f-word { color: #2b579a; } 
-        .f-pdf { color: #e74c3c; } 
-        .f-img { color: #2ecc71; } 
-        .f-music { color: #e67e22; }
-
-        @keyframes popIn { from { opacity:0; transform:scale(0.8); } to { opacity:1; transform:scale(1); } }
-        .empty-msg { color: #94a3b8; font-style: italic; margin-top: 20px; }
-
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <div class="container">
-        <header>
-            <h1>L'Arborescence</h1>
-            <p>Clique sur les dossiers jaunes pour voir les fichiers qu'ils contiennent.</p>
-        </header>
-
-        <!-- MINDMAP (ROOT IS A FOLDER) -->
-        <div class="mindmap-wrapper">
-            <div class="tree">
-                <ul>
-                    <li>
-                        <!-- ROOT NODE -->
-                        <a class="tree-node active" onclick="openFolder('root', this)">
-                            <i class="fa-solid fa-folder-open"></i> Mon Cartable
-                        </a>
-                        
-                        <ul>
-                            <!-- BRANCH 1: COURS -->
-                            <li>
-                                <a class="tree-node" onclick="openFolder('cours', this)">
-                                    <i class="fa-solid fa-folder"></i> Cours
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a class="tree-node" onclick="openFolder('maths', this)">
-                                            <i class="fa-solid fa-folder"></i> Maths
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="tree-node" onclick="openFolder('histoire', this)">
-                                            <i class="fa-solid fa-folder"></i> Histoire
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <!-- BRANCH 2: PERSO -->
-                            <li>
-                                <a class="tree-node" onclick="openFolder('perso', this)">
-                                    <i class="fa-solid fa-folder"></i> Perso
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a class="tree-node" onclick="openFolder('images', this)">
-                                            <i class="fa-solid fa-folder"></i> Images
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+    <!-- Welcome Animation Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-content">
+            <div class="welcome-logo-container">
+                <div class="welcome-rings">
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="ring ring-3"></div>
+                </div>
+                <img src="logo.jpg" alt="Profy Academy" class="welcome-logo">
+            </div>
+            <div class="welcome-text">
+                <h1 class="welcome-title">Profy Academy</h1>
+                <p class="welcome-subtitle">مرحباً بك في عالم التعلّم</p>
+            </div>
+            <div class="welcome-loader">
+                <div class="loader-bar"></div>
             </div>
         </div>
-
-        <!-- FILE VIEWER -->
-        <div class="viewer-box">
-            <div class="viewer-header" id="folder-title">
-                <i class="fa-regular fa-folder-open" style="color:var(--folder-col)"></i> Contenu de : Mon Cartable
-            </div>
-            <div class="files-grid" id="file-list">
-                <!-- Files will appear here -->
-            </div>
-        </div>
+        <div class="welcome-particles" id="particles"></div>
     </div>
 
-    <script>
-        // --- DATA STRUCTURE ---
-        const fileData = {
-            'root': [], // Root folder is visually empty (contains subfolders only)
-            'cours': [], 
-            'maths': [
-                {name: 'Exercice_1.pdf', icon: 'fa-file-pdf', type: 'f-pdf'},
-                {name: 'Leçon_Geo.docx', icon: 'fa-file-word', type: 'f-word'}
-            ],
-            'histoire': [
-                {name: 'Louis_XIV.docx', icon: 'fa-file-word', type: 'f-word'},
-                {name: 'Frise.jpg', icon: 'fa-file-image', type: 'f-img'}
-            ],
-            'perso': [
-                {name: 'Liste_Cadeaux.txt', icon: 'fa-file-lines', type: 'f-word'}
-            ],
-            'images': [
-                {name: 'Vacances.jpg', icon: 'fa-file-image', type: 'f-img'},
-                {name: 'Mon_Chien.png', icon: 'fa-file-image', type: 'f-img'},
-                {name: 'Dessin.png', icon: 'fa-file-image', type: 'f-img'}
-            ]
-        };
+    <!-- Luxury Background -->
+    <div class="luxury-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+        <div class="pattern-overlay"></div>
+    </div>
+    
+    <!-- Main App -->
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
+                <div class="header-left">
+                    <div class="logo-wrapper">
+                        <img src="logo.jpg" alt="Profy Academy" class="logo">
+                        <div class="logo-glow"></div>
+                    </div>
+                    <div class="brand">
+                        <span class="brand-name">Profy Academy</span>
+                        <span class="brand-sub">الحصص المجانية</span>
+                    </div>
+                </div>
+                
+                <div class="header-center">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="ابحث عن درس..." id="searchInput">
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="stats-badge">
+                        <i class="fas fa-book-open"></i>
+                        <span id="lessonCount">3 دروس</span>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="scroll-progress" id="scrollProgress"></div>
+        </header>
 
-        // --- FUNCTION: OPEN FOLDER ---
-        function openFolder(key, element) {
-            // 1. Highlight Active Folder
-            document.querySelectorAll('.tree-node').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label><i class="fas fa-filter"></i> تصفية حسب المادة:</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-subject="all">
+                            <i class="fas fa-th-large"></i>
+                            <span>الكل</span>
+                        </button>
+                        <button class="filter-btn" data-subject="arabic">
+                            <i class="fas fa-pen-fancy"></i>
+                            <span>اللغة العربية</span>
+                        </button>
+                        <button class="filter-btn" data-subject="math">
+                            <i class="fas fa-calculator"></i>
+                            <span>الرياضيات</span>
+                        </button>
+                        <button class="filter-btn" data-subject="science">
+                            <i class="fas fa-flask"></i>
+                            <span>الإيقاظ العلمي</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            // 2. Update Title
-            const folderName = element.innerText.trim();
-            document.getElementById('folder-title').innerHTML = `
-                <i class="fa-regular fa-folder-open" style="color:var(--folder-col)"></i> Contenu de : ${folderName}
-            `;
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Content Area -->
+            <div class="content-area">
 
-            // 3. Display Files
-            const container = document.getElementById('file-list');
-            container.innerHTML = ''; // Clear
+                <div class="lessons-grid" id="lessonsGrid">
+                    <!-- Lesson 1 - Arabic -->
+                    <article class="lesson-card" data-grade="6" data-subject="arabic">
+                        <div class="card-shine"></div>
+                        <div class="card-media">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube-nocookie.com/embed/3dhAIfpa22I?si=KmG9v6D-ICGvMqz1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="subject-badge arabic">
+                                    <i class="fas fa-pen-fancy"></i>
+                                    اللغة العربية
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>كل قواعد اللغة العربية للثلاثي الأول في فيديو واحد</h3>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
+                            </div>
+                        </div>
+                    </article>
 
-            const files = fileData[key];
+                    <!-- Lesson 2 - Math -->
+                    <article class="lesson-card" data-grade="6" data-subject="math">
+                        <div class="card-shine"></div>
+                        <div class="card-media">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube-nocookie.com/embed/VwJqwigi2zo?si=MIFXjud-bJk9e7pK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="subject-badge math">
+                                    <i class="fas fa-calculator"></i>
+                                    الرياضيات
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>حصة مجانية حول المضاعفات</h3>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
+                            </div>
+                            <div class="card-resources">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/860097540214601" target="_blank" class="resource-btn exercises">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>التمارين</span>
+                                </a>
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/860757300148625" target="_blank" class="resource-btn correction">
+                                    <i class="fas fa-check-double"></i>
+                                    <span>الإصلاح</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
 
-            if (!files || files.length === 0) {
-                container.innerHTML = '<p class="empty-msg">Ce dossier ne contient pas de fichiers (seulement des sous-dossiers).</p>';
-                return;
-            }
+                    <!-- Lesson 3 - Science -->
+                    <article class="lesson-card" data-grade="6" data-subject="science">
+                        <div class="card-shine"></div>
+                        <div class="card-media">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube-nocookie.com/embed/rfwibs1byeU?si=KL_4hTgIOfu52b8x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="subject-badge science">
+                                    <i class="fas fa-flask"></i>
+                                    الإيقاظ العلمي
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>حصة مراجعة مجانية</h3>
+                            <div class="card-meta">
+                                <span class="meta-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
+                            </div>
+                            <div class="card-resources">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/871019612455727" target="_blank" class="resource-btn exercises">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>التمارين</span>
+                                </a>
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/872001769024178" target="_blank" class="resource-btn correction">
+                                    <i class="fas fa-check-double"></i>
+                                    <span>الإصلاح</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
 
-            files.forEach(file => {
-                const div = document.createElement('div');
-                div.className = 'file-card';
-                div.innerHTML = `
-                    <i class="fa-regular ${file.icon} ${file.type}"></i>
-                    <span>${file.name}</span>
-                `;
-                div.onclick = () => alert("Tu as ouvert le fichier : " + file.name);
-                container.appendChild(div);
-            });
-        }
+                <!-- Empty State -->
+                <div class="empty-state hidden" id="emptyState">
+                    <i class="fas fa-search"></i>
+                    <h3>لا توجد نتائج</h3>
+                    <p>جرّب تغيير معايير البحث</p>
+                </div>
+            </div>
+        </main>
 
-        // Optional: Load root on start
-        // openFolder('root', document.querySelector('.tree-node'));
-    </script>
 
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
