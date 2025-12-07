@@ -9,29 +9,59 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', newTheme);
 });
 
-// Loading Screen - wait for iframes to load
+// Loading Screen with percentage
 const loadingScreen = document.getElementById('loadingScreen');
+const loadingProgressBar = document.getElementById('loadingProgressBar');
+const loadingPercent = document.getElementById('loadingPercent');
 const iframes = document.querySelectorAll('iframe');
 let loadedCount = 0;
+const totalItems = iframes.length;
+
+function updateProgress(percent) {
+    loadingProgressBar.style.width = percent + '%';
+    loadingPercent.textContent = Math.round(percent) + '%';
+}
 
 function checkAllLoaded() {
     loadedCount++;
-    if (loadedCount >= iframes.length) {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => loadingScreen.remove(), 400);
+    const percent = (loadedCount / totalItems) * 100;
+    updateProgress(percent);
+    
+    if (loadedCount >= totalItems) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => loadingScreen.remove(), 400);
+        }, 200);
     }
 }
+
+// Animate progress smoothly with fallback
+let fakeProgress = 0;
+const progressInterval = setInterval(() => {
+    if (fakeProgress < 90 && loadedCount < totalItems) {
+        fakeProgress += Math.random() * 15;
+        if (fakeProgress > 90) fakeProgress = 90;
+        updateProgress(fakeProgress);
+    }
+}, 300);
 
 // Set timeout fallback (max 5 seconds wait)
 setTimeout(() => {
     if (!loadingScreen.classList.contains('hidden')) {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => loadingScreen.remove(), 400);
+        clearInterval(progressInterval);
+        updateProgress(100);
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => loadingScreen.remove(), 400);
+        }, 200);
     }
 }, 5000);
 
 iframes.forEach(iframe => {
-    iframe.addEventListener('load', checkAllLoaded);
+    iframe.addEventListener('load', () => {
+        clearInterval(progressInterval);
+        checkAllLoaded();
+    });
 });
 
 // Elements

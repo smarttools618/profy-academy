@@ -17,7 +17,10 @@
     <div class="loading-screen" id="loadingScreen">
         <img src="logo.jpg" alt="Profy Academy" class="loading-logo">
         <h1 class="loading-title">Profy Academy</h1>
-        <div class="loading-spinner"></div>
+        <div class="loading-progress-container">
+            <div class="loading-progress-bar" id="loadingProgressBar"></div>
+        </div>
+        <p class="loading-percent" id="loadingPercent">0%</p>
         <p class="loading-text">جاري التحميل...</p>
     </div>
     
@@ -37,7 +40,7 @@
                 <div class="header-right">
                     <div class="stats-badge">
                         <i class="fas fa-book-open"></i>
-                        <span id="lessonCount">3 دروس</span>
+                        <span id="lessonCount">4 دروس</span>
                     </div>
                     <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع">
                         <i class="fas fa-moon"></i>
@@ -57,18 +60,22 @@
                         <button class="filter-btn active" data-subject="all">
                             <i class="fas fa-th-large"></i>
                             <span>الكل</span>
+                            <span class="filter-count">4</span>
                         </button>
                         <button class="filter-btn" data-subject="arabic">
                             <i class="fas fa-pen-fancy"></i>
                             <span>اللغة العربية</span>
+                            <span class="filter-count">1</span>
                         </button>
                         <button class="filter-btn" data-subject="math">
                             <i class="fas fa-calculator"></i>
                             <span>الرياضيات</span>
+                            <span class="filter-count">2</span>
                         </button>
                         <button class="filter-btn" data-subject="science">
                             <i class="fas fa-flask"></i>
                             <span>الإيقاظ العلمي</span>
+                            <span class="filter-count">1</span>
                         </button>
                     </div>
                 </div>
@@ -89,6 +96,10 @@
                                 <iframe src="https://www.youtube-nocookie.com/embed/3dhAIfpa22I?si=KmG9v6D-ICGvMqz1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                             </div>
                             <div class="card-overlay">
+                                <span class="grade-badge">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
                                 <span class="subject-badge arabic">
                                     <i class="fas fa-pen-fancy"></i>
                                     اللغة العربية
@@ -97,11 +108,9 @@
                         </div>
                         <div class="card-body">
                             <h3>كل قواعد اللغة العربية للثلاثي الأول في فيديو واحد</h3>
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    السنة السادسة
-                                </span>
+                            <div class="card-grade-info">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>السنة السادسة</span>
                             </div>
                         </div>
                     </article>
@@ -114,6 +123,10 @@
                                 <iframe src="https://www.youtube-nocookie.com/embed/VwJqwigi2zo?si=MIFXjud-bJk9e7pK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                             </div>
                             <div class="card-overlay">
+                                <span class="grade-badge">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
                                 <span class="subject-badge math">
                                     <i class="fas fa-calculator"></i>
                                     الرياضيات
@@ -122,11 +135,9 @@
                         </div>
                         <div class="card-body">
                             <h3>حصة مجانية حول المضاعفات</h3>
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    السنة السادسة
-                                </span>
+                            <div class="card-grade-info">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>السنة السادسة</span>
                             </div>
                             <div class="card-resources">
                                 <a href="https://www.facebook.com/groups/450750914482601/posts/860097540214601" target="_blank" class="resource-btn exercises">
@@ -141,7 +152,44 @@
                         </div>
                     </article>
 
-                    <!-- Lesson 3 - Science -->
+                    <!-- Lesson 3 - Math (New) -->
+                    <article class="lesson-card" data-grade="6" data-subject="math">
+                        <div class="card-shine"></div>
+                        <div class="card-media">
+                            <div class="video-wrapper">
+                                <iframe src="https://www.youtube-nocookie.com/embed/DsEpE5MYcJc?si=GJ-z4ZpFxQ6egqF7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                            <div class="card-overlay">
+                                <span class="grade-badge">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
+                                <span class="subject-badge math">
+                                    <i class="fas fa-calculator"></i>
+                                    الرياضيات
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3>السنة السادسة | الرياضيات - حصة مراجعة مجانية</h3>
+                            <div class="card-grade-info">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>السنة السادسة</span>
+                            </div>
+                            <div class="card-resources">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/865508336340188" target="_blank" class="resource-btn exercises">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>التمارين</span>
+                                </a>
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/866235126267509" target="_blank" class="resource-btn correction">
+                                    <i class="fas fa-check-double"></i>
+                                    <span>الإصلاح</span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Lesson 4 - Science -->
                     <article class="lesson-card" data-grade="6" data-subject="science">
                         <div class="card-shine"></div>
                         <div class="card-media">
@@ -149,6 +197,10 @@
                                 <iframe src="https://www.youtube-nocookie.com/embed/rfwibs1byeU?si=KL_4hTgIOfu52b8x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
                             </div>
                             <div class="card-overlay">
+                                <span class="grade-badge">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    السنة السادسة
+                                </span>
                                 <span class="subject-badge science">
                                     <i class="fas fa-flask"></i>
                                     الإيقاظ العلمي
@@ -157,11 +209,9 @@
                         </div>
                         <div class="card-body">
                             <h3>حصة مراجعة مجانية</h3>
-                            <div class="card-meta">
-                                <span class="meta-item">
-                                    <i class="fas fa-graduation-cap"></i>
-                                    السنة السادسة
-                                </span>
+                            <div class="card-grade-info">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>السنة السادسة</span>
                             </div>
                             <div class="card-resources">
                                 <a href="https://www.facebook.com/groups/450750914482601/posts/871019612455727" target="_blank" class="resource-btn exercises">
