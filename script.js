@@ -1,104 +1,121 @@
-// Theme
+// DOM Elements
+const splash = document.getElementById('splash');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const menuBtn = document.getElementById('menuBtn');
+const themeBtn = document.getElementById('themeBtn');
 const themeToggle = document.getElementById('themeToggle');
-const theme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', theme);
-
-themeToggle.addEventListener('click', () => {
-    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-});
-
-// Loading Screen with percentage
-const loadingScreen = document.getElementById('loadingScreen');
-const loadingProgressBar = document.getElementById('loadingProgressBar');
-const loadingPercent = document.getElementById('loadingPercent');
-const iframes = document.querySelectorAll('iframe');
-let loadedCount = 0;
-const totalItems = iframes.length;
-
-function updateProgress(percent) {
-    loadingProgressBar.style.width = percent + '%';
-    loadingPercent.textContent = Math.round(percent) + '%';
-}
-
-function checkAllLoaded() {
-    loadedCount++;
-    const percent = (loadedCount / totalItems) * 100;
-    updateProgress(percent);
-    
-    if (loadedCount >= totalItems) {
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => loadingScreen.remove(), 400);
-        }, 200);
-    }
-}
-
-// Animate progress smoothly with fallback
-let fakeProgress = 0;
-const progressInterval = setInterval(() => {
-    if (fakeProgress < 90 && loadedCount < totalItems) {
-        fakeProgress += Math.random() * 15;
-        if (fakeProgress > 90) fakeProgress = 90;
-        updateProgress(fakeProgress);
-    }
-}, 300);
-
-// Set timeout fallback (max 5 seconds wait)
-setTimeout(() => {
-    if (!loadingScreen.classList.contains('hidden')) {
-        clearInterval(progressInterval);
-        updateProgress(100);
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => loadingScreen.remove(), 400);
-        }, 200);
-    }
-}, 5000);
-
-iframes.forEach(iframe => {
-    iframe.addEventListener('load', () => {
-        clearInterval(progressInterval);
-        checkAllLoaded();
-    });
-});
-
-// Elements
-const filterBtns = document.querySelectorAll('.filter-btn[data-subject]');
-const cards = document.querySelectorAll('.lesson-card');
+const navItems = document.querySelectorAll('.nav-item');
+const lessons = document.querySelectorAll('.lesson');
+const lessonsContainer = document.getElementById('lessons');
+const emptyState = document.getElementById('empty');
+const pageTitle = document.getElementById('pageTitle');
 const lessonCount = document.getElementById('lessonCount');
-const emptyState = document.getElementById('emptyState');
-const grid = document.getElementById('lessonsGrid');
 
-let subject = 'all';
+// Subject names in Arabic
+const subjectNames = {
+    all: 'جميع الدروس',
+    arabic: 'اللغة العربية',
+    math: 'الرياضيات',
+    science: 'الإيقاظ العلمي'
+};
 
-// Filter
-function filter() {
+// Hide splash screen
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        splash.classList.add('hidden');
+    }, 800);
+});
+
+// Theme Management
+const savedTheme = localStorage.getItem('theme') || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateThemeUI();
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateThemeUI();
+}
+
+function updateThemeUI() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const icon = isDark ? 'fa-sun' : 'fa-moon';
+    const text = isDark ? 'الوضع النهاري' : 'الوضع الليلي';
+    
+    themeBtn.innerHTML = `<i class="fas ${icon}"></i><span>${text}</span>`;
+    themeToggle.innerHTML = `<i class="fas ${icon}"></i>`;
+}
+
+themeBtn.addEventListener('click', toggleTheme);
+themeToggle.addEventListener('click', toggleTheme);
+
+// Mobile Sidebar
+function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+menuBtn.addEventListener('click', openSidebar);
+overlay.addEventListener('click', closeSidebar);
+
+// Filter Lessons
+function filterLessons(subject) {
     let count = 0;
-    cards.forEach(card => {
-        const match = subject === 'all' || card.dataset.subject === subject;
-        card.classList.toggle('hidden', !match);
+    
+    lessons.forEach(lesson => {
+        const match = subject === 'all' || lesson.dataset.subject === subject;
+        lesson.classList.toggle('hidden', !match);
         if (match) count++;
     });
     
-    lessonCount.textContent = count + ' دروس';
-    emptyState.classList.toggle('hidden', count > 0);
-    grid.style.display = count > 0 ? 'grid' : 'none';
+    // Update UI
+    pageTitle.textContent = subjectNames[subject];
+    lessonCount.textContent = count === 1 ? 'درس واحد متاح' : `${count} دروس متاحة`;
+    
+    // Toggle empty state
+    emptyState.hidden = count > 0;
+    lessonsContainer.style.display = count > 0 ? 'grid' : 'none';
+    
+    // Close sidebar on mobile
+    if (window.innerWidth <= 1024) {
+        closeSidebar();
+    }
 }
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        subject = btn.dataset.subject;
-        filter();
+// Navigation
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        filterLessons(item.dataset.filter);
     });
 });
 
-// Scroll progress
-const progress = document.getElementById('scrollProgress');
-window.addEventListener('scroll', () => {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.width = max > 0 ? (window.scrollY / max * 100) + '%' : '0%';
-}, { passive: true });
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeSidebar();
+    }
+});
+
+// Handle resize
+let resizeTimer;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+        if (window.innerWidth > 1024) {
+            closeSidebar();
+        }
+    }, 100);
+});
