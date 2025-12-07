@@ -20,12 +20,51 @@ const subjectNames = {
     science: 'الإيقاظ العلمي'
 };
 
-// Hide splash screen
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        splash.classList.add('hidden');
-    }, 800);
+// Loading Progress
+const progressBar = document.getElementById('progressBar');
+const progressPercent = document.getElementById('progressPercent');
+const iframes = document.querySelectorAll('iframe');
+let loadedCount = 0;
+const totalItems = iframes.length || 1;
+
+function updateProgress(percent) {
+    const value = Math.min(100, Math.round(percent));
+    progressBar.style.width = value + '%';
+    progressPercent.textContent = value + '%';
+}
+
+function hideLoading() {
+    updateProgress(100);
+    setTimeout(() => splash.classList.add('hidden'), 300);
+}
+
+// Smooth progress animation
+let fakeProgress = 0;
+const progressInterval = setInterval(() => {
+    if (fakeProgress < 85) {
+        fakeProgress += Math.random() * 15 + 5;
+        if (fakeProgress > 85) fakeProgress = 85;
+        updateProgress(fakeProgress);
+    }
+}, 200);
+
+// Track iframe loads
+iframes.forEach(iframe => {
+    iframe.addEventListener('load', () => {
+        loadedCount++;
+        clearInterval(progressInterval);
+        updateProgress((loadedCount / totalItems) * 100);
+        if (loadedCount >= totalItems) hideLoading();
+    });
 });
+
+// Fallback timeout (max 4 seconds)
+setTimeout(() => {
+    if (!splash.classList.contains('hidden')) {
+        clearInterval(progressInterval);
+        hideLoading();
+    }
+}, 4000);
 
 // Theme Management
 const savedTheme = localStorage.getItem('theme') || 
