@@ -5,6 +5,7 @@
     --arabic: #f43f5e;
     --math: #10b981;
     --science: #f59e0b;
+    --english: #3b82f6;
     --bg: #f8fafc;
     --bg-alt: #f1f5f9;
     --card: #ffffff;
@@ -397,6 +398,7 @@ a {
 .lesson-tag.arabic { background: var(--arabic); }
 .lesson-tag.math { background: var(--math); }
 .lesson-tag.science { background: var(--science); }
+.lesson-tag.english { background: var(--english); }
 
 .lesson-info h3 {
     font-size: 1.1rem;
