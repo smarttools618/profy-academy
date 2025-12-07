@@ -17,7 +17,8 @@ const subjectNames = {
     all: 'جميع الدروس',
     arabic: 'اللغة العربية',
     math: 'الرياضيات',
-    science: 'الإيقاظ العلمي'
+    science: 'الإيقاظ العلمي',
+    english: 'الإنجليزية'
 };
 
 // Loading Progress
