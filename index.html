@@ -5,39 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الحصص المجانية | Profy Academy</title>
     <link rel="icon" type="image/jpeg" href="logo.jpg">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube-nocookie.com">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Welcome Animation Overlay -->
-    <div class="welcome-overlay" id="welcomeOverlay">
-        <div class="welcome-content">
-            <div class="welcome-logo-container">
-                <div class="welcome-rings">
-                    <div class="ring ring-1"></div>
-                    <div class="ring ring-2"></div>
-                    <div class="ring ring-3"></div>
-                </div>
-                <img src="logo.jpg" alt="Profy Academy" class="welcome-logo">
-            </div>
-            <div class="welcome-text">
-                <h1 class="welcome-title">Profy Academy</h1>
-                <p class="welcome-subtitle">مرحباً بك في عالم التعلّم</p>
-            </div>
-            <div class="welcome-loader">
-                <div class="loader-bar"></div>
-            </div>
-        </div>
-        <div class="welcome-particles" id="particles"></div>
-    </div>
-
-    <!-- Luxury Background -->
-    <div class="luxury-bg">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-        <div class="pattern-overlay"></div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <img src="logo.jpg" alt="Profy Academy" class="loading-logo">
+        <h1 class="loading-title">Profy Academy</h1>
+        <div class="loading-spinner"></div>
+        <p class="loading-text">جاري التحميل...</p>
     </div>
     
     <!-- Main App -->
@@ -46,20 +27,10 @@
         <header class="header">
             <div class="header-container">
                 <div class="header-left">
-                    <div class="logo-wrapper">
-                        <img src="logo.jpg" alt="Profy Academy" class="logo">
-                        <div class="logo-glow"></div>
-                    </div>
+                    <img src="logo.jpg" alt="Profy Academy" class="logo">
                     <div class="brand">
                         <span class="brand-name">Profy Academy</span>
                         <span class="brand-sub">الحصص المجانية</span>
-                    </div>
-                </div>
-                
-                <div class="header-center">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="ابحث عن درس..." id="searchInput">
                     </div>
                 </div>
                 
@@ -208,9 +179,9 @@
 
                 <!-- Empty State -->
                 <div class="empty-state hidden" id="emptyState">
-                    <i class="fas fa-search"></i>
-                    <h3>لا توجد نتائج</h3>
-                    <p>جرّب تغيير معايير البحث</p>
+                    <i class="fas fa-folder-open"></i>
+                    <h3>لا توجد دروس</h3>
+                    <p>جرّب تغيير التصفية</p>
                 </div>
             </div>
         </main>
