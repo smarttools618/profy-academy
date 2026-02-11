@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +10,109 @@
     <link rel="icon" type="image/jpeg" href="logo.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Splash Screen -->
     <div class="splash" id="splash">
+        <!-- Animated background particles -->
+        <div class="splash-particles" id="splashParticles"></div>
+        <!-- Floating gradient orbs -->
+        <div class="splash-orb splash-orb-1"></div>
+        <div class="splash-orb splash-orb-2"></div>
+        <div class="splash-orb splash-orb-3"></div>
+
         <div class="splash-content">
-            <img src="logo.jpg" alt="Profy Academy" class="splash-logo">
-            <h1 class="splash-title">Profy Academy</h1>
-            <div class="splash-progress">
-                <div class="splash-progress-bar" id="progressBar"></div>
+            <!-- Logo with animated rings -->
+            <div class="splash-logo-wrapper">
+                <div class="splash-ring splash-ring-1"></div>
+                <div class="splash-ring splash-ring-2"></div>
+                <div class="splash-ring splash-ring-3"></div>
+                <img src="logo.jpg" alt="Profy Academy" class="splash-logo">
             </div>
-            <p class="splash-percent" id="progressPercent">0%</p>
+
+            <h1 class="splash-title">
+                <span class="splash-title-word splash-title-accent">Academy</span>
+                <span class="splash-title-word">Profy</span>
+            </h1>
+            <p class="splash-tagline">Apprendre avec passion</p>
+
+            <!-- Subject pills -->
+            <div class="splash-subjects">
+                <span class="splash-pill" style="--pill-color: var(--arabic); --pill-delay: 0.6s"><i
+                        class="fas fa-pen-fancy"></i> العربية</span>
+                <span class="splash-pill" style="--pill-color: var(--math); --pill-delay: 0.8s"><i
+                        class="fas fa-calculator"></i> الرياضيات</span>
+                <span class="splash-pill" style="--pill-color: var(--science); --pill-delay: 1.0s"><i
+                        class="fas fa-flask"></i> العلوم</span>
+                <span class="splash-pill" style="--pill-color: var(--english); --pill-delay: 1.2s"><i
+                        class="fas fa-language"></i> English</span>
+            </div>
+
+            <!-- Progress section -->
+            <div class="splash-progress-wrapper">
+                <div class="splash-progress">
+                    <div class="splash-progress-bar" id="progressBar">
+                        <div class="splash-progress-glow"></div>
+                    </div>
+                </div>
+                <div class="splash-progress-info">
+                    <span class="splash-status" id="splashStatus">جاري التحميل...</span>
+                    <span class="splash-percent" id="progressPercent">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grade Selection Screen -->
+    <div class="grade-selection" id="gradeSelection" style="display: none;">
+        <div class="grade-particles" id="gradeParticles"></div>
+        <div class="grade-orb grade-orb-1"></div>
+        <div class="grade-orb grade-orb-2"></div>
+        <div class="grade-content">
+            <div class="grade-logo-wrapper">
+                <img src="logo.jpg" alt="Profy Academy" class="grade-logo">
+            </div>
+            <h2 class="grade-title">اختر المستوى الدراسي</h2>
+            <p class="grade-subtitle">اختر السنة الدراسية للوصول إلى الدروس</p>
+            <div class="grade-buttons">
+                <button class="grade-btn" data-grade="4">
+                    <div class="grade-btn-icon"><i class="fas fa-4"></i></div>
+                    <div class="grade-btn-text">
+                        <span class="grade-btn-label">السنة الرابعة</span>
+                        <span class="grade-btn-hint">قريباً</span>
+                    </div>
+                    <i class="fas fa-lock grade-btn-lock"></i>
+                </button>
+                <button class="grade-btn" data-grade="5">
+                    <div class="grade-btn-icon"><i class="fas fa-5"></i></div>
+                    <div class="grade-btn-text">
+                        <span class="grade-btn-label">السنة الخامسة</span>
+                        <span class="grade-btn-hint">قريباً</span>
+                    </div>
+                    <i class="fas fa-lock grade-btn-lock"></i>
+                </button>
+                <button class="grade-btn grade-btn-active" data-grade="6">
+                    <div class="grade-btn-icon"><i class="fas fa-6"></i></div>
+                    <div class="grade-btn-text">
+                        <span class="grade-btn-label">السنة السادسة</span>
+                        <span class="grade-btn-hint">6 دروس متاحة</span>
+                    </div>
+                    <i class="fas fa-arrow-left grade-btn-arrow"></i>
+                </button>
+                <button class="grade-btn" data-grade="7">
+                    <div class="grade-btn-icon"><i class="fas fa-7"></i></div>
+                    <div class="grade-btn-text">
+                        <span class="grade-btn-label">السنة السابعة</span>
+                        <span class="grade-btn-hint">قريباً</span>
+                    </div>
+                    <i class="fas fa-lock grade-btn-lock"></i>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -38,17 +128,19 @@
                 </div>
             </div>
 
+
+
             <nav class="sidebar-nav">
                 <p class="nav-label">المواد الدراسية</p>
                 <button class="nav-item active" data-filter="all">
                     <i class="fas fa-home"></i>
                     <span>جميع الدروس</span>
-                    <span class="nav-badge">5</span>
+                    <span class="nav-badge">6</span>
                 </button>
                 <button class="nav-item" data-filter="arabic">
                     <i class="fas fa-pen-fancy"></i>
                     <span>اللغة العربية</span>
-                    <span class="nav-badge">1</span>
+                    <span class="nav-badge">2</span>
                 </button>
                 <button class="nav-item" data-filter="math">
                     <i class="fas fa-calculator"></i>
@@ -84,27 +176,84 @@
                 </button>
                 <div class="topbar-title">
                     <h2 id="pageTitle">جميع الدروس</h2>
-                    <p id="lessonCount">5 دروس متاحة</p>
+                    <p id="lessonCount">6 دروس متاحة</p>
                 </div>
                 <div class="topbar-actions">
+                    <!-- Grade button for mobile -->
+                    <button class="icon-btn grade-mobile-btn" id="gradeMobileBtn" aria-label="تغيير المستوى">
+                        <i class="fas fa-graduation-cap"></i>
+                    </button>
                     <button class="icon-btn" id="themeToggle" aria-label="تبديل الوضع">
                         <i class="fas fa-moon"></i>
                     </button>
                 </div>
             </header>
 
+            <!-- Hero Banner -->
+            <div class="hero-banner">
+
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h2>مرحباً بك في <span class="hero-accent">Profy Academy</span></h2>
+                        <p>حصص مجانية لجميع المواد — السنة السادسة</p>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-num">6</span>
+                            <span class="hero-stat-label">دروس</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-num">4</span>
+                            <span class="hero-stat-label">مواد</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-num">∞</span>
+                            <span class="hero-stat-label">مجاناً</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Content -->
             <div class="content">
+                <!-- Grade Selector in Content Area -->
+                <div class="content-grade-selector">
+                    <button class="grade-selector-btn main-grade-btn custom-cursor-on-hover" id="mainGradeBtn">
+                        <div class="grade-selector-info">
+                            <i class="fas fa-graduation-cap"></i>
+                            <div class="grade-selector-text">
+                                <span class="grade-selector-label" id="currentGradeLabel">السنة السادسة</span>
+                                <span class="grade-selector-sub">تغيير المستوى الدراسي</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-exchange-alt grade-selector-arrow"></i>
+                    </button>
+                </div>
                 <div class="lessons" id="lessons">
                     <!-- Lesson 1 -->
                     <div class="lesson" data-subject="arabic">
                         <div class="lesson-video">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/3dhAIfpa22I" 
-                                title="قواعد اللغة العربية"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
+                            <iframe src="https://www.youtube-nocookie.com/embed/r1ewsfqW0QM?si=JJciUsLdTuHbcJ3r"
+                                title="السنة السادسة |حصة مجانية في مادة العربية"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
+                            </iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <span class="lesson-tag arabic">اللغة العربية</span>
+                            <h3>السنة السادسة |حصة مجانية في مادة العربية - 8 فيفري 2026</h3>
+                            <p class="lesson-grade"><i class="fas fa-graduation-cap"></i> السنة السادسة</p>
+                        </div>
+                    </div>
+
+                    <!-- Lesson 2 -->
+                    <div class="lesson" data-subject="arabic">
+                        <div class="lesson-video">
+                            <iframe src="https://www.youtube-nocookie.com/embed/3dhAIfpa22I" title="قواعد اللغة العربية"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
                             </iframe>
                         </div>
                         <div class="lesson-info">
@@ -114,15 +263,12 @@
                         </div>
                     </div>
 
-                    <!-- Lesson 2 -->
+                    <!-- Lesson 3 -->
                     <div class="lesson" data-subject="math">
                         <div class="lesson-video">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/VwJqwigi2zo" 
-                                title="المضاعفات"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
+                            <iframe src="https://www.youtube-nocookie.com/embed/VwJqwigi2zo" title="المضاعفات"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
                             </iframe>
                         </div>
                         <div class="lesson-info">
@@ -130,36 +276,12 @@
                             <h3>حصة مجانية حول المضاعفات</h3>
                             <p class="lesson-grade"><i class="fas fa-graduation-cap"></i> السنة السادسة</p>
                             <div class="lesson-links">
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/860097540214601" target="_blank" rel="noopener">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/860097540214601"
+                                    target="_blank" rel="noopener">
                                     <i class="fas fa-file-alt"></i> التمارين
                                 </a>
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/860757300148625" target="_blank" rel="noopener">
-                                    <i class="fas fa-check-circle"></i> الإصلاح
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Lesson 3 -->
-                    <div class="lesson" data-subject="math">
-                        <div class="lesson-video">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/DsEpE5MYcJc" 
-                                title="حصة مراجعة الرياضيات"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
-                            </iframe>
-                        </div>
-                        <div class="lesson-info">
-                            <span class="lesson-tag math">الرياضيات</span>
-                            <h3>حصة مراجعة مجانية في الرياضيات</h3>
-                            <p class="lesson-grade"><i class="fas fa-graduation-cap"></i> السنة السادسة</p>
-                            <div class="lesson-links">
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/865508336340188" target="_blank" rel="noopener">
-                                    <i class="fas fa-file-alt"></i> التمارين
-                                </a>
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/866235126267509" target="_blank" rel="noopener">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/860757300148625"
+                                    target="_blank" rel="noopener">
                                     <i class="fas fa-check-circle"></i> الإصلاح
                                 </a>
                             </div>
@@ -167,14 +289,37 @@
                     </div>
 
                     <!-- Lesson 4 -->
+                    <div class="lesson" data-subject="math">
+                        <div class="lesson-video">
+                            <iframe src="https://www.youtube-nocookie.com/embed/DsEpE5MYcJc"
+                                title="حصة مراجعة الرياضيات"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
+                            </iframe>
+                        </div>
+                        <div class="lesson-info">
+                            <span class="lesson-tag math">الرياضيات</span>
+                            <h3>حصة مراجعة مجانية في الرياضيات</h3>
+                            <p class="lesson-grade"><i class="fas fa-graduation-cap"></i> السنة السادسة</p>
+                            <div class="lesson-links">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/865508336340188"
+                                    target="_blank" rel="noopener">
+                                    <i class="fas fa-file-alt"></i> التمارين
+                                </a>
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/866235126267509"
+                                    target="_blank" rel="noopener">
+                                    <i class="fas fa-check-circle"></i> الإصلاح
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lesson 5 -->
                     <div class="lesson" data-subject="science">
                         <div class="lesson-video">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/rfwibs1byeU" 
-                                title="الإيقاظ العلمي"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
+                            <iframe src="https://www.youtube-nocookie.com/embed/rfwibs1byeU" title="الإيقاظ العلمي"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
                             </iframe>
                         </div>
                         <div class="lesson-info">
@@ -182,25 +327,25 @@
                             <h3>حصة مراجعة مجانية في الإيقاظ العلمي</h3>
                             <p class="lesson-grade"><i class="fas fa-graduation-cap"></i> السنة السادسة</p>
                             <div class="lesson-links">
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/871019612455727" target="_blank" rel="noopener">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/871019612455727"
+                                    target="_blank" rel="noopener">
                                     <i class="fas fa-file-alt"></i> التمارين
                                 </a>
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/872001769024178" target="_blank" rel="noopener">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/872001769024178"
+                                    target="_blank" rel="noopener">
                                     <i class="fas fa-check-circle"></i> الإصلاح
                                 </a>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Lesson 5 - English -->
+                    <!-- Lesson 6 -->
                     <div class="lesson" data-subject="english">
                         <div class="lesson-video">
-                            <iframe 
-                                src="https://www.youtube-nocookie.com/embed/OtH9rwMKPic" 
+                            <iframe src="https://www.youtube-nocookie.com/embed/OtH9rwMKPic"
                                 title="الانجليزية - حصة مجانية"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen
-                                loading="lazy">
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen loading="lazy">
                             </iframe>
                         </div>
                         <div class="lesson-info">
@@ -208,10 +353,12 @@
                             <h3>الانجليزية - حصة مجانية</h3>
                             <p class="lesson-grade"><i class="fas fa-graduation-cap"></i> السنة السادسة</p>
                             <div class="lesson-links">
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/854169074140781" target="_blank" rel="noopener">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/854169074140781"
+                                    target="_blank" rel="noopener">
                                     <i class="fas fa-file-alt"></i> التمارين
                                 </a>
-                                <a href="https://www.facebook.com/groups/450750914482601/posts/855130190711336" target="_blank" rel="noopener">
+                                <a href="https://www.facebook.com/groups/450750914482601/posts/855130190711336"
+                                    target="_blank" rel="noopener">
                                     <i class="fas fa-check-circle"></i> الإصلاح
                                 </a>
                             </div>
@@ -234,4 +381,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
