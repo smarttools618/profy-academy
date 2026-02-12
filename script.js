@@ -17,6 +17,9 @@ const gradeMobileBtn = document.getElementById('gradeMobileBtn');
 const mainGradeBtn = document.getElementById('mainGradeBtn');
 const currentGradeLabels = document.querySelectorAll('#currentGradeLabel');
 
+let currentGrade = localStorage.getItem('selectedGrade') || '6';
+let currentSubject = 'all';
+
 // Subject names in Arabic
 const subjectNames = {
     all: 'جميع الدروس',
@@ -200,26 +203,86 @@ menuBtn.addEventListener('click', openSidebar);
 overlay.addEventListener('click', closeSidebar);
 
 // Filter Lessons
-function filterLessons(subject) {
+function filterLessons(subject = currentSubject, grade = currentGrade) {
+    currentSubject = subject;
+    currentGrade = grade;
     let count = 0;
 
     lessons.forEach(lesson => {
-        const match = subject === 'all' || lesson.dataset.subject === subject;
-        lesson.classList.toggle('hidden', !match);
-        if (match) count++;
+        const subjectMatch = subject === 'all' || lesson.dataset.subject === subject;
+        const gradeMatch = lesson.dataset.grade === grade;
+        const isVisible = subjectMatch && gradeMatch;
+
+        lesson.classList.toggle('hidden', !isVisible);
+        if (isVisible) count++;
     });
 
     // Update UI
     pageTitle.textContent = subjectNames[subject];
-    lessonCount.textContent = count === 1 ? 'درس واحد متاح' : `${count} دروس متاحة`;
+    lessonCount.textContent = count === 1 ? 'درس واحد متاح' : (count === 2 ? 'درسان متاحان' : `${count} دروس متاحة`);
 
     // Toggle empty state
     emptyState.hidden = count > 0;
     lessonsContainer.style.display = count > 0 ? 'grid' : 'none';
 
+    // Update counts and labels
+    updateDynamicContent();
+
     // Close sidebar on mobile
     if (window.innerWidth <= 1024) {
         closeSidebar();
+    }
+}
+
+// Update dynamic content (badges, labels, etc.)
+function updateDynamicContent() {
+    // Update grade labels
+    currentGradeLabels.forEach(label => {
+        label.textContent = gradeNames[currentGrade];
+    });
+
+    // Update hero banner text
+    const heroText = document.querySelector('.hero-text p');
+    if (heroText) {
+        heroText.textContent = `حصص مجانية لجميع المواد — ${gradeNames[currentGrade]}`;
+    }
+
+    // Update nav badges
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        const filter = item.dataset.filter;
+        const badge = item.querySelector('.nav-badge');
+        if (badge) {
+            let subjectCount = 0;
+            lessons.forEach(lesson => {
+                const subjectMatch = filter === 'all' || lesson.dataset.subject === filter;
+                const gradeMatch = lesson.dataset.grade === currentGrade;
+                if (subjectMatch && gradeMatch) subjectCount++;
+            });
+            badge.textContent = subjectCount;
+        }
+    });
+
+    // Update hero stats
+    const totalLessonsStat = document.querySelector('.hero-stat:nth-child(1) .hero-stat-num');
+    const totalSubjectsStat = document.querySelector('.hero-stat:nth-child(3) .hero-stat-num');
+
+    if (totalLessonsStat) {
+        let totalCount = 0;
+        lessons.forEach(lesson => {
+            if (lesson.dataset.grade === currentGrade) totalCount++;
+        });
+        totalLessonsStat.textContent = totalCount;
+    }
+
+    if (totalSubjectsStat) {
+        const subjects = new Set();
+        lessons.forEach(lesson => {
+            if (lesson.dataset.grade === currentGrade) {
+                subjects.add(lesson.dataset.subject);
+            }
+        });
+        totalSubjectsStat.textContent = subjects.size;
     }
 }
 
@@ -329,14 +392,38 @@ gradeButtons.forEach(btn => {
     btn.addEventListener('click', () => {
         const grade = btn.dataset.grade;
 
-        if (grade === '6') {
-            // Active grade — dismiss grade selection and show app
+        if (grade === '6' || grade === '7') {
+            // Active grades
+            currentGrade = grade;
+            localStorage.setItem('selectedGrade', grade);
+
+            // Update active state in selection UI
+            gradeButtons.forEach(b => b.classList.remove('grade-btn-active'));
+            btn.classList.add('grade-btn-active');
+
+            // Refresh content
+            filterLessons(currentSubject, grade);
             hideGradeSelection();
         } else {
             // Locked grades — show coming soon toast
             showToast('هذا المستوى غير متاح حالياً — قريباً إن شاء الله!');
         }
     });
+});
+
+// Initialization
+document.addEventListener('DOMContentLoaded', () => {
+    // Set initial grade button active state
+    gradeButtons.forEach(btn => {
+        if (btn.dataset.grade === currentGrade) {
+            btn.classList.add('grade-btn-active');
+        } else {
+            btn.classList.remove('grade-btn-active');
+        }
+    });
+
+    // Initial filter
+    filterLessons(currentSubject, currentGrade);
 });
 
 // Main section grade button
