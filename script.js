@@ -392,7 +392,7 @@ gradeButtons.forEach(btn => {
     btn.addEventListener('click', () => {
         const grade = btn.dataset.grade;
 
-        if (grade === '6' || grade === '7') {
+        if (grade === '5' || grade === '6' || grade === '7') {
             // Active grades
             currentGrade = grade;
             localStorage.setItem('selectedGrade', grade);
