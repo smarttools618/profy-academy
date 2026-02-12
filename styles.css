@@ -827,6 +827,36 @@ a {
     text-align: center;
 }
 
+/* Facebook Button */
+.facebook-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    background: #1877F2;
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+}
+
+.facebook-btn:hover {
+    background: #166fe5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(24, 119, 242, 0.4);
+    color: #ffffff;
+}
+
+.facebook-btn i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
 /* ===== Main Content ===== */
 .main {
     flex: 1;
@@ -907,6 +937,11 @@ a {
     color: #fff;
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
     transform: translateY(-1px);
+}
+
+.fb-topbar-btn:hover {
+    background: #1877F2;
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.4);
 }
 
 .grade-mobile-btn {
