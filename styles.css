@@ -7,6 +7,7 @@
     --math: #10b981;
     --science: #f59e0b;
     --english: #3b82f6;
+    --french: #a855f7;
     --bg: #f0f2f8;
     --bg-alt: #e8ebf3;
     --card: #ffffff;
@@ -1122,6 +1123,7 @@ a {
 .lesson-tag.math { background: linear-gradient(135deg, #10b981, #059669); }
 .lesson-tag.science { background: linear-gradient(135deg, #f59e0b, #d97706); }
 .lesson-tag.english { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.lesson-tag.french { background: linear-gradient(135deg, #a855f7, #9333ea); }
 
 .lesson-info h3 {
     font-size: 1.05rem;

@@ -23,7 +23,8 @@ const subjectNames = {
     arabic: 'اللغة العربية',
     math: 'الرياضيات',
     science: 'الإيقاظ العلمي',
-    english: 'الإنجليزية'
+    english: 'الإنجليزية',
+    french: 'الفرنسية'
 };
 
 // Grade names
